@@ -580,6 +580,18 @@ html::-webkit-scrollbar {
   background: var(--md-accent-fg-color--transparent);
   border-radius: 4px;
   box-shadow: inset 3px 0 0 var(--md-accent-fg-color);
+  transition: padding-left 0.15s ease;
+}
+
+/* Nudge highlighted text clear of the left indicator bar so it never
+   collides with it. TOC links have no default horizontal padding, while
+   left-nav links sit at 1rem — each is pushed just past its resting point. */
+.md-sidebar--secondary .md-nav__link--current {
+  padding-left: 0.45rem;
+}
+
+.md-sidebar--primary .md-nav__link--current {
+  padding-left: calc(1rem + 0.35rem);
 }
 
 /* Breadcrumb: while reading a sub-section, the containing lecture stays
