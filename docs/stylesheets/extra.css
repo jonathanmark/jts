@@ -171,6 +171,99 @@
 .md-typeset .tabbed-content {
   margin-top: 0.4em;
 }
-.md-typeset .tabbed-content .mermaid {
-  padding: 0.4em 0;
+
+/* ---- Diagrams: centered cards with clear boundaries --------------------- */
+
+/* Card background/border per color scheme (distinct from the page surface). */
+[data-md-color-scheme="default"] {
+  --md-diagram-bg: #fdfcf7;
+  --md-diagram-border: #d6ccb1;
 }
+[data-md-color-scheme="slate"] {
+  --md-diagram-bg: #221d15;
+  --md-diagram-border: #3d362a;
+}
+
+.md-typeset .mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: min(54rem, 100%);
+  margin: 1.2em auto;
+  padding: 1.4rem 1.2rem 1.3rem;
+  background: var(--md-diagram-bg);
+  border: 1px solid var(--md-diagram-border);
+  border-left: 4px solid var(--md-primary-fg-color);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(20, 56, 43, 0.05), 0 6px 18px rgba(20, 56, 43, 0.07);
+  overflow-x: auto;
+}
+
+/* ---- Header focus-mode toggle buttons ----------------------------------- */
+
+.md-header button.md-header__button {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+}
+body.md-hide-nav [data-md-toggle="nav"],
+body.md-hide-toc [data-md-toggle="toc"] {
+  color: var(--md-accent-fg-color);
+}
+
+/* ---- Hideable sidebars (focus mode) ------------------------------------- */
+
+body.md-hide-nav .md-sidebar--primary,
+body.md-hide-toc .md-sidebar--secondary {
+  display: none !important;
+}
+/* Focus mode: reclaim the gutters and keep a comfortable, centered measure
+   so long reading lines don't hurt readability. */
+body.md-hide-nav .md-sidebar--primary ~ .md-content,
+body.md-hide-toc .md-sidebar--secondary ~ .md-content {
+  flex-grow: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.md-hide-nav .md-sidebar--primary ~ .md-content > .md-content__inner,
+body.md-hide-toc .md-sidebar--secondary ~ .md-content > .md-content__inner {
+  max-width: 40rem;
+}
+
+/* ---- Hide scrollbars; show a "reached the end" bump --------------------- */
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+.md-sidebar__scrollwrap {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.md-sidebar__scrollwrap::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile-style overscroll bump shown when the reader reaches the page end. */
+.md-scroll-end {
+  position: fixed;
+  left: 50%;
+  bottom: -1px;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 0;
+  background: var(--md-primary-fg-color);
+  border-radius: 50% 50% 0 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  box-shadow: 0 -2px 8px rgba(20, 56, 43, 0.35);
+}
+

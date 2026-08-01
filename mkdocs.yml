@@ -12,6 +12,7 @@ repo_url: https://github.com/jonathanmark/jonathanmark.github.io
 # Content lives in the standard docs/ directory (default docs_dir).
 theme:
   name: material
+  custom_dir: overrides
   logo: assets/favicon.svg
   favicon: assets/favicon.svg
   palette:
@@ -48,6 +49,8 @@ extra_css:
 extra_javascript:
   - javascripts/mermaid.min.js
   - javascripts/mermaid-init.js
+  - javascripts/sidebar-toggle.js
+  - javascripts/scroll-end.js
 
 # Remove the "Made with Material for MkDocs" watermark from the footer.
 extra:
