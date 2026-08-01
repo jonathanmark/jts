@@ -153,6 +153,11 @@
       function dismiss() {
         clearTimeout(timer);
         if (!card.isConnected) return;
+        // Freeze the current height, then collapse it so the stack glides
+        // upward smoothly instead of snapping when the card is removed.
+        card.style.maxHeight = card.offsetHeight + "px";
+        void card.offsetHeight; // force reflow so the collapse transitions
+        card.style.maxHeight = "0";
         card.classList.remove("md-toast--in");
         card.classList.add("md-toast--out");
         setTimeout(function () { if (card.isConnected) card.remove(); }, 320);
@@ -218,12 +223,20 @@
       tip.style.top = y + "px";
     }
     function hideTip() { tip.classList.remove("md-hover-tip--show"); }
-    function bindStateTip(anchor, getText) {
+
+    /* Bind a toggle's hover tooltip. On click (or the toggle's state change),
+       the tooltip is refreshed in place so it never shows a stale state. */
+    function bindStateTip(anchor, getText, onChange) {
       if (!anchor) return;
+      function refresh() {
+        if (tip.classList.contains("md-hover-tip--show")) showTip(getText(), anchor);
+      }
       anchor.addEventListener("mouseenter", function () { showTip(getText(), anchor); });
       anchor.addEventListener("mouseleave", hideTip);
       anchor.addEventListener("focus", function () { showTip(getText(), anchor); });
       anchor.addEventListener("blur", hideTip);
+      if (onChange) onChange(refresh);
+      else anchor.addEventListener("click", refresh);
     }
 
     var SCHEME_NAMES = ["Ivory", "Paper", "Slate", "Grey"];
@@ -240,8 +253,14 @@
     var paletteLabel = paletteForm ? paletteForm.querySelector("label") : null;
     bindStateTip(paletteLabel, function () {
       var checked = document.querySelector('input[name="__palette"]:checked');
-      var idx = checked ? parseInt(String(checked.id).split("_")[2] || "0", 10) : 0;
+      var idx = checked ? parseInt(String(checked.id).split("_").pop() || "0", 10) : 0;
       return "Theme: " + (SCHEME_NAMES[idx] || "Ivory");
+    }, function (refresh) {
+      // The palette label's click lands before the radio input changes, so
+      // refresh on the actual input change event instead.
+      document.querySelectorAll('input[name="__palette"]').forEach(function (input) {
+        input.addEventListener("change", function () { refresh(); });
+      });
     });
 
     window.addEventListener("resize", hideTip);

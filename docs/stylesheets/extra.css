@@ -64,6 +64,7 @@
   --md-code-hl-comment-color: #7a7264;
 
   --md-admonition-bg-color: #fbf9f3;
+  --md-sidebar-bg: #efe9db;
 
   --md-footer-bg-color: #14382b;
   --md-footer-fg-color: #e9e2d3;
@@ -100,6 +101,7 @@
   --md-code-hl-comment-color: #8a826f;
 
   --md-admonition-bg-color: #1d1913;
+  --md-sidebar-bg: #1e1912;
 
   --md-footer-bg-color: #0f0d09;
   --md-footer-fg-color: #d8cfbb;
@@ -142,6 +144,7 @@
   --md-code-hl-comment-color: #817a6b;
 
   --md-admonition-bg-color: #faf8f2;
+  --md-sidebar-bg: #e9e6dc;
 
   --md-footer-bg-color: #14382b;
   --md-footer-bg-color--dark: #0e241b;
@@ -188,6 +191,7 @@
   --md-code-hl-comment-color: #8f8f87;
 
   --md-admonition-bg-color: #242422;
+  --md-sidebar-bg: #232320;
 
   --md-footer-bg-color: #0f0f0d;
   --md-footer-bg-color--dark: #0a0a08;
@@ -352,6 +356,26 @@ body.md-hide-toc .md-sidebar--secondary ~ .md-content > .md-content__inner {
   max-width: 40rem;
 }
 
+/* ---- Sidebars as guide panels -------------------------------------------- */
+
+/* A quieter panel behind the navigation and the table of contents, so the
+   reading surface in the middle is unmistakably the focus. The tint is a
+   hair deeper than the page background in every scheme (see --md-sidebar-bg)
+   and a hairline separates each panel from the content column. */
+.md-sidebar {
+  background: var(--md-sidebar-bg);
+}
+.md-sidebar__scrollwrap {
+  background: var(--md-sidebar-bg);
+  min-height: calc(100vh - 4.8rem);
+}
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  box-shadow: inset -1px 0 0 var(--md-diagram-border);
+}
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  box-shadow: inset 1px 0 0 var(--md-diagram-border);
+}
+
 /* ---- Hide scrollbars; show a "reached the end" bump --------------------- */
 
 html {
@@ -394,7 +418,7 @@ html::-webkit-scrollbar {
   z-index: 50;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  align-items: flex-start;      /* each toast keeps its own natural width */
   max-width: min(22rem, calc(100vw - 2rem));
   pointer-events: none;
 }
@@ -404,6 +428,7 @@ html::-webkit-scrollbar {
   align-items: center;
   gap: 0.7rem;
   padding: 0.5rem 0.6rem 0.5rem 0.45rem;
+  margin-bottom: 0.6rem;        /* spacing between stacked toasts */
   background: var(--md-diagram-bg);
   border: 1px solid var(--md-diagram-border);
   border-left: 4px solid var(--md-primary-fg-color);
@@ -411,6 +436,22 @@ html::-webkit-scrollbar {
   box-shadow: 0 4px 16px rgba(20, 56, 43, 0.16), 0 1px 3px rgba(20, 56, 43, 0.1);
   pointer-events: auto;
   font-family: var(--md-text-font-family), Georgia, serif;
+  transition: max-height 0.3s ease, padding 0.3s ease, margin-bottom 0.3s ease,
+    border-top-width 0.3s ease, border-bottom-width 0.3s ease;
+}
+.md-toast:last-child {
+  margin-bottom: 0;
+}
+
+/* Dismissal: collapse the card so the stack glides up instead of snapping. */
+.md-toast--out {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  overflow: hidden;
 }
 
 .md-toast__art {
