@@ -64,7 +64,6 @@
   --md-code-hl-comment-color: #7a7264;
 
   --md-admonition-bg-color: #fbf9f3;
-  --md-sidebar-bg: #efe9db;
 
   --md-footer-bg-color: #14382b;
   --md-footer-fg-color: #e9e2d3;
@@ -101,7 +100,6 @@
   --md-code-hl-comment-color: #8a826f;
 
   --md-admonition-bg-color: #1d1913;
-  --md-sidebar-bg: #1e1912;
 
   --md-footer-bg-color: #0f0d09;
   --md-footer-fg-color: #d8cfbb;
@@ -144,7 +142,6 @@
   --md-code-hl-comment-color: #817a6b;
 
   --md-admonition-bg-color: #faf8f2;
-  --md-sidebar-bg: #e9e6dc;
 
   --md-footer-bg-color: #14382b;
   --md-footer-bg-color--dark: #0e241b;
@@ -191,7 +188,6 @@
   --md-code-hl-comment-color: #8f8f87;
 
   --md-admonition-bg-color: #242422;
-  --md-sidebar-bg: #232320;
 
   --md-footer-bg-color: #0f0f0d;
   --md-footer-bg-color--dark: #0a0a08;
@@ -356,19 +352,10 @@ body.md-hide-toc .md-sidebar--secondary ~ .md-content > .md-content__inner {
   max-width: 40rem;
 }
 
-/* ---- Sidebars as guide panels -------------------------------------------- */
+/* ---- Sidebars ------------------------------------------------------------ */
 
-/* A quieter panel behind the navigation and the table of contents, so the
-   reading surface in the middle is unmistakably the focus. The tint is a
-   hair deeper than the page background in every scheme (see --md-sidebar-bg)
-   and a hairline separates each panel from the content column. */
-.md-sidebar {
-  background: var(--md-sidebar-bg);
-}
-.md-sidebar__scrollwrap {
-  background: var(--md-sidebar-bg);
-  min-height: calc(100vh - 4.8rem);
-}
+/* The sidebars sit on the page background so the reading surface stays the
+   only visual focus. A hairline separates each panel from the content column. */
 .md-sidebar--primary .md-sidebar__scrollwrap {
   box-shadow: inset -1px 0 0 var(--md-diagram-border);
 }
@@ -376,18 +363,19 @@ body.md-hide-toc .md-sidebar--secondary ~ .md-content > .md-content__inner {
   box-shadow: inset 1px 0 0 var(--md-diagram-border);
 }
 
-/* Sidebar headers (nav + TOC titles): on desktop they render as a band with
-   the page background and a soft glow that clashes with the panel. Drop the
-   background so they sit flush on the guide panel, align them with the links
-   beneath, and separate them with a hairline. (Scoped to desktop so the
-   mobile drawer keeps its branded header.) */
+/* Anchored sidebar headers (nav + TOC): pinned to the top of their panel and
+   painted with the page background, so list items scroll underneath out of
+   sight. Both headers share one treatment for a consistent, seamless look. */
 @media screen and (min-width: 76.25em) {
   .md-sidebar .md-nav__title {
-    background: transparent;
-    box-shadow: none;
-    padding-left: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--md-default-bg-color);
+    box-shadow: none;                      /* drop Material's soft glow */
     border-bottom: 1px solid var(--md-diagram-border);
-    margin-bottom: 0.4rem;
+    padding: 0.4rem 1rem;
+    color: var(--md-default-fg-color--light);
   }
 }
 
