@@ -66,7 +66,7 @@ Open [Excalidraw](https://excalidraw.com) (free, no account needed) or use pen a
 
 ```mermaid
 flowchart TD
-    B["User's Browser"]
+    B(["User's Browser"])
     B -->|"HTTP POST /api/shorten<br/>{ url: 'https://example.com/very-long-url' }"| W["Web Server / API"]
     W -->|"generates short code"| D[("Database<br/>short_code → original_url")]
     W -->|"HTTP Response<br/>{ short_url: 'https://short.link/abc123' }"| B

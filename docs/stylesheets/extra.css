@@ -154,3 +154,23 @@
 .md-typeset .highlight .md-clipboard {
   color: var(--md-default-fg-color--lighter);
 }
+
+/* ---- Content tabs (switchable diagram views) ---------------------------- */
+
+.md-typeset .tabbed-set > label {
+  font-weight: 600;
+}
+.md-typeset .tabbed-set > input:checked + label {
+  color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+}
+.md-typeset .tabbed-set > input:checked + label:hover {
+  color: var(--md-accent-fg-color);
+}
+/* A little paper-like breathing room around diagram tabs. */
+.md-typeset .tabbed-content {
+  margin-top: 0.4em;
+}
+.md-typeset .tabbed-content .mermaid {
+  padding: 0.4em 0;
+}

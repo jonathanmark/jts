@@ -166,77 +166,74 @@ You might think architecture is "senior engineer stuff." It's not. Here's why yo
 
 ## 1.3 How to Read an Architecture Diagram
 
-Let's break down the architecture diagram from our blueprint step by step. Here is the same architecture from three angles — technical, business/context, and a UML request flow.
+Let's break down the architecture diagram from our blueprint step by step. Here is the same architecture in three switchable views — technical, business/context, and a UML request flow.
 
-**View 1 — Technical architecture**
+=== "Technical"
+    ```mermaid
+    flowchart TD
+        UI(["Agent UI<br/>React + WebSockets/SSE"])
+        CDN["CloudFront + S3<br/>CDN"]
+        ALB["Application Load Balancer"]
+        API["FastAPI<br/>AWS ECS Fargate · Auto-scaling"]
+        AUTH["AWS Cognito<br/>JWT Authentication"]
+        CACHE[("ElastiCache<br/>Redis · Session")]
+        DB[("Aurora PostgreSQL<br/>Customer / Sales")]
+        VEC[("OpenSearch Serverless<br/>Wiki Embeddings")]
+        LLM{{"Amazon Bedrock<br/>Claude 3.5 Haiku / Sonnet Vision"}}
 
-```mermaid
-flowchart TD
-    UI["Agent UI<br/>React + WebSockets/SSE"]
-    CDN["CloudFront + S3<br/>CDN"]
-    ALB["Application Load Balancer"]
-    API["FastAPI<br/>AWS ECS Fargate · Auto-scaling"]
-    AUTH["AWS Cognito<br/>JWT Authentication"]
-    CACHE["ElastiCache<br/>Redis · Session"]
-    DB["Aurora PostgreSQL<br/>Customer / Sales"]
-    VEC["OpenSearch Serverless<br/>Wiki Embeddings"]
-    LLM["Amazon Bedrock<br/>Claude 3.5 Haiku / Sonnet Vision"]
+        UI --> CDN --> ALB --> API
+        AUTH -. "JWT" .-> API
+        API -->|"Cache"| CACHE
+        API -->|"Structured"| DB
+        API -->|"Vector"| VEC
+        CACHE -->|"cache miss"| LLM
+        API -->|"new queries"| LLM
+    ```
 
-    UI --> CDN --> ALB --> API
-    AUTH -. "JWT" .-> API
-    API -->|"Cache"| CACHE
-    API -->|"Structured"| DB
-    API -->|"Vector"| VEC
-    CACHE -->|"cache miss"| LLM
-    API -->|"new queries"| LLM
-```
+=== "Business / Context"
+    ```mermaid
+    flowchart LR
+        AGENT(["Support Agent"])
+        subgraph PLATFORM["AI Agentic Platform (AWS)"]
+            UI["Agent Console<br/>React Web App"]
+            API["FastAPI Backend"]
+            AUTH["AWS Cognito<br/>Identity"]
+            DATA["Data Layer<br/>SQL · Vector · Cache"]
+            AI{{"Amazon Bedrock<br/>Claude Models"}}
+            UI --> API
+            API --> AUTH
+            API --> DATA
+            API --> AI
+        end
+        AGENT -->|"browser session"| UI
+    ```
 
-**View 2 — Business / context**
+=== "Request Flow (UML)"
+    ```mermaid
+    sequenceDiagram
+        autonumber
+        participant UI as Agent UI (React)
+        participant CDN as CloudFront
+        participant ALB as Application Load Balancer
+        participant API as FastAPI (ECS Fargate)
+        participant CACHE as ElastiCache (Redis)
+        participant DB as Aurora PostgreSQL
+        participant LLM as Amazon Bedrock
 
-```mermaid
-flowchart LR
-    AGENT["Support Agent"]
-    subgraph PLATFORM["AI Agentic Platform (AWS)"]
-        UI["Agent Console<br/>React Web App"]
-        API["FastAPI Backend"]
-        AUTH["AWS Cognito<br/>Identity"]
-        DATA["Data Layer<br/>SQL · Vector · Cache"]
-        AI["Amazon Bedrock<br/>Claude Models"]
-        UI --> API
-        API --> AUTH
-        API --> DATA
-        API --> AI
-    end
-    AGENT -->|"browser session"| UI
-```
-
-**View 3 — Request flow (UML sequence)**
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant UI as Agent UI (React)
-    participant CDN as CloudFront
-    participant ALB as Application Load Balancer
-    participant API as FastAPI (ECS Fargate)
-    participant CACHE as ElastiCache (Redis)
-    participant DB as Aurora PostgreSQL
-    participant LLM as Amazon Bedrock
-
-    UI->>CDN: HTTPS POST /api/chat (JWT)
-    CDN->>ALB: Forward request
-    ALB->>API: Route to healthy container
-    API->>CACHE: Look up semantic cache
-    alt Cache hit
-        CACHE-->>API: Cached response (~40 ms)
-    else Cache miss
-        API->>DB: SQL: SELECT status FROM orders...
-        DB-->>API: Order rows (~20 ms)
-        API->>LLM: Prompt + retrieved context (Claude 3.5)
-        LLM-->>API: Streamed tokens
-    end
-    API-->>UI: SSE stream (first token < 1 s)
-```
+        UI->>CDN: HTTPS POST /api/chat (JWT)
+        CDN->>ALB: Forward request
+        ALB->>API: Route to healthy container
+        API->>CACHE: Look up semantic cache
+        alt Cache hit
+            CACHE-->>API: Cached response (~40 ms)
+        else Cache miss
+            API->>DB: SQL: SELECT status FROM orders...
+            DB-->>API: Order rows (~20 ms)
+            API->>LLM: Prompt + retrieved context (Claude 3.5)
+            LLM-->>API: Streamed tokens
+        end
+        API-->>UI: SSE stream (first token < 1 s)
+    ```
 
 ### How to Read It (Step by Step)
 
@@ -267,7 +264,7 @@ Almost every system you'll encounter uses one or more of these patterns:
 
 ```mermaid
 flowchart LR
-    C["Client<br/>(Browser)"] -->|"HTTP Request"| S["Server<br/>(API)"]
+    C(["Client<br/>(Browser)"]) -->|"HTTP Request"| S["Server<br/>(API)"]
     S -->|"HTTP Response"| C
 ```
 
@@ -279,7 +276,7 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    C["Client"] --> G["API Gateway"]
+    C(["Client"]) --> G["API Gateway"]
     G --> A["Auth Service"] --> UDB[("User DB")]
     G --> O["Order Service"] --> ODB[("Order DB")]
     G --> S["Search Service"] --> IDX[("Search Index")]
@@ -291,7 +288,7 @@ Instead of one giant server doing everything (a "monolith"), each service owns o
 
 ```mermaid
 flowchart LR
-    F["File Upload"] --> S3[("S3 Bucket")] -->|"triggers"| L["Lambda Function"] --> D[("Database")]
+    F[/"File Upload"/] --> S3[("S3 Bucket")] -->|"triggers"| L["Lambda Function"] --> D[("Database")]
 ```
 
 Something happens (a file is uploaded), and that event automatically triggers downstream work. Our blueprint uses this for the ETL pipeline: upload a spreadsheet → Lambda parses it → data lands in PostgreSQL.
@@ -523,7 +520,7 @@ flowchart LR
     EC2["EC2<br/>(Your VM)<br/>You manage OS, patches, scaling"]
     ECS["ECS<br/>(Your Containers)<br/>You manage Docker,<br/>AWS manages servers"]
     LAMBDA["Lambda<br/>(Your Code)<br/>AWS manages everything"]
-    BED["Bedrock<br/>(API Call)<br/>You manage the prompt,<br/>AWS manages the model"]
+    BED{{"Bedrock<br/>(API Call)<br/>You manage the prompt,<br/>AWS manages the model"}}
 
     EC2 --> ECS --> LAMBDA --> BED
 ```
@@ -814,11 +811,11 @@ Every user question → vector search → find similar content → feed to LLM
 
 ```mermaid
 flowchart TD
-    Q1["User: 'What's the status of order #8821?'"] --> C1{"LLM classifies"} -->|"STRUCTURED data query"| G1["Generate SQL:<br/>SELECT status FROM orders WHERE id = 8821"]
+    Q1[/"User: 'What's the status of order #8821?'"/] --> C1{"LLM classifies"} -->|"STRUCTURED data query"| G1["Generate SQL:<br/>SELECT status FROM orders WHERE id = 8821"]
     G1 --> AUR[("Aurora PostgreSQL<br/>executes query (~20 ms)")]
     AUR --> F1["LLM formats result:<br/>'Order #8821 was shipped on July 28 and is in transit.'"]
 
-    Q2["User: \"How do I fix a paper jam on an HP LaserJet?\""] --> C2{"LLM classifies"} -->|"UNSTRUCTURED knowledge query"| VS[("OpenSearch<br/>vector search (~150 ms)")]
+    Q2[/"User: 'How do I fix a paper jam on an HP LaserJet?'"/] --> C2{"LLM classifies"} -->|"UNSTRUCTURED knowledge query"| VS[("OpenSearch<br/>vector search (~150 ms)")]
     VS --> R3["Returns top 3 wiki articles<br/>about printer troubleshooting"]
     R3 --> F2["LLM synthesizes answer<br/>from retrieved articles"]
 ```
@@ -827,13 +824,13 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Q["Incoming question"]
+    Q[/"Incoming question"/]
     Q --> D1{"Contains order ID, date, account number, or dollar amount?"}
     D1 -->|"YES"| SQL[("SQL Tool Call → Aurora PostgreSQL")]
     Q --> D2{"Contains 'how to', 'what is', 'troubleshoot', or a product name?"}
     D2 -->|"YES"| VS[("Vector Search → OpenSearch → RAG")]
     Q --> D3{"Contains an image attachment?"}
-    D3 -->|"YES"| VM["Vision Model (Claude Sonnet)<br/>→ Multimodal Pipeline"]
+    D3 -->|"YES"| VM{{"Vision Model (Claude Sonnet)<br/>→ Multimodal Pipeline"}}
 ```
 
 ---
@@ -1087,7 +1084,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    AUTH["Agent Authenticated<br/>(Cognito JWT Scope)"]
+    AUTH(["Agent Authenticated<br/>(Cognito JWT Scope)"])
     AUTH --> G["Dept: General"]
     AUTH --> F["Dept: Finance"]
     AUTH --> L["Dept: Logistics"]
@@ -1178,12 +1175,12 @@ RULES:
 
 ```mermaid
 flowchart TD
-    Q["Agent (General Dept) asks:<br/>'Issue a refund for order #5521'"]
+    Q[/"Agent (General Dept) asks:<br/>'Issue a refund for order #5521'"/]
     Q --> CHK["AI checks allowed_tools =<br/>[view_product_info, troubleshoot_hardware, update_account]"]
     CHK --> IN{"'process_refund' in allowed_tools?"}
     IN -->|"No"| ROUTE["AI response:<br/>ROUTING REQUIRED: This query involves Finance. Please transfer this ticket to the Finance department."]
     ROUTE --> BTN["Frontend: Shows a 'Transfer to Finance' button"]
-    BTN --> FIN["Finance agent receives ticket → has 'process_refund' permission → handles refund"]
+    BTN --> FIN(["Finance agent receives ticket → has 'process_refund' permission → handles refund"])
 ```
 
 This is **defense in depth**: the backend blocks unauthorized API calls, AND the AI prompt prevents the model from even attempting to help with out-of-scope requests.
@@ -1301,8 +1298,8 @@ You don't need to understand the math, but you should understand the pipeline:
 
 ```mermaid
 flowchart LR
-    P["Customer Photo<br/>(JPEG)"] --> E["Image Encoding<br/>(Vision Encoder → Token IDs)"]
-    E --> L["LLM Processing<br/>(Transformer + Text Prompt)"]
+    P[/"Customer Photo<br/>(JPEG)"/] --> E["Image Encoding<br/>(Vision Encoder → Token IDs)"]
+    E --> L{{"LLM Processing<br/>(Transformer + Text Prompt)"}}
     L --> O["Text Output<br/>(Diagnosis + Steps)"]
 ```
 

@@ -8,15 +8,15 @@ To support **1,000 concurrent agents** with an **end-to-end response time of $<1
 
 ```mermaid
 flowchart TD
-    UI["Agent UI<br/>React + WebSockets/SSE"]
+    UI(["Agent UI<br/>React + WebSockets/SSE"])
     CDN["CloudFront + S3<br/>CDN"]
     ALB["Application Load Balancer"]
     API["FastAPI<br/>AWS ECS Fargate · Auto-scaling"]
     AUTH["AWS Cognito<br/>JWT Authentication"]
-    CACHE["ElastiCache<br/>Redis · Session"]
-    DB["Aurora PostgreSQL<br/>Customer / Sales"]
-    VEC["OpenSearch Serverless<br/>Wiki Embeddings"]
-    LLM["Amazon Bedrock<br/>Claude 3.5 Haiku / Sonnet Vision"]
+    CACHE[("ElastiCache<br/>Redis · Session")]
+    DB[("Aurora PostgreSQL<br/>Customer / Sales")]
+    VEC[("OpenSearch Serverless<br/>Wiki Embeddings")]
+    LLM{{"Amazon Bedrock<br/>Claude 3.5 Haiku / Sonnet Vision"}}
 
     UI --> CDN --> ALB --> API
     AUTH -. "JWT" .-> API
@@ -81,7 +81,7 @@ pie showData title Latency Budget (% of 1,500 ms target)
 
 ```mermaid
 flowchart TD
-    AUTH["Agent Authenticated<br/>(Cognito JWT Scope)"]
+    AUTH(["Agent Authenticated<br/>(Cognito JWT Scope)"])
     AUTH --> G["Dept: General"]
     AUTH --> F["Dept: Finance"]
     AUTH --> L["Dept: Logistics"]
