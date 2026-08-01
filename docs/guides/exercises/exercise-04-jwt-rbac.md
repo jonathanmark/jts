@@ -324,9 +324,9 @@ curl -s http://localhost:8000/api/products -H "Authorization: Bearer ${TOKEN_MIK
 
 | Endpoint | General (Mike) | Finance (Sarah) | Admin (Priya) | No Token |
 |---|---|---|---|---|
-| `GET /api/products` | ✅ / ❌ | ✅ / ❌ | ✅ / ❌ | ✅ / ❌ |
-| `POST /api/refunds` | ✅ / ❌ | ✅ / ❌ | ✅ / ❌ | ✅ / ❌ |
-| `GET /api/admin/users` | ✅ / ❌ | ✅ / ❌ | ✅ / ❌ | ✅ / ❌ |
+| `GET /api/products` | Yes / No | Yes / No | Yes / No | Yes / No |
+| `POST /api/refunds` | Yes / No | Yes / No | Yes / No | Yes / No |
+| `GET /api/admin/users` | Yes / No | Yes / No | Yes / No | Yes / No |
 
 ---
 
@@ -346,7 +346,7 @@ import sys
 
 token = sys.argv[1] if len(sys.argv) > 1 else input("Paste JWT: ")
 
-# ⚠️ DO NOT VERIFY — just decode the payload (for learning only)
+# DO NOT VERIFY — just decode the payload (for learning only)
 # In production, ALWAYS verify the signature!
 try:
     decoded = jwt.decode(token, options={"verify_signature": False})
@@ -399,12 +399,12 @@ python decode_jwt.py "$TOKEN_SARAH"
 
 ## What You've Practiced
 
-- ✅ Issued JWT tokens with custom claims (role)
-- ✅ Verified JWT signatures on every request
-- ✅ Implemented RBAC with FastAPI dependencies
-- ✅ Tested every role-permission combination
-- ✅ Understood 401 vs. 403 error semantics
-- ✅ Decoded a JWT payload manually
+- Issued JWT tokens with custom claims (role)
+- Verified JWT signatures on every request
+- Implemented RBAC with FastAPI dependencies
+- Tested every role-permission combination
+- Understood 401 vs. 403 error semantics
+- Decoded a JWT payload manually
 
 ---
 

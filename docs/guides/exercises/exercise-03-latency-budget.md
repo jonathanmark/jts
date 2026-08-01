@@ -112,11 +112,11 @@ if __name__ == '__main__':
     print("=" * 60)
     baseline = measure_latency(API_URL)
     
-    print("\n📊 Results (20 requests):")
+    print("\nResults (20 requests):")
     for metric, value in baseline.items():
         print(f"  {metric:>8}: {value:>8.1f} ms")
     
-    print("\n💡 The P95 means '95% of requests were faster than this.'")
+    print("\nThe P95 means '95% of requests were faster than this.'")
     print("   It's often more important than the average because it")
     print("   tells you about the worst user experiences.")
 ```
@@ -323,11 +323,11 @@ After 2 minutes, click "Stop." Take a screenshot of the Charts tab.
 
 ## What You've Practiced
 
-- ✅ Measured API latency programmatically (min, mean, median, P95, P99)
-- ✅ Implemented Redis caching with TTL-based expiration
-- ✅ Proven (with numbers) that caching reduces latency by 100x+
-- ✅ Understood cache hit ratios and why P95 matters
-- ✅ Run a load test with Locust simulating 100 concurrent users
+- Measured API latency programmatically (min, mean, median, P95, P99)
+- Implemented Redis caching with TTL-based expiration
+- Proven (with numbers) that caching reduces latency by 100x+
+- Understood cache hit ratios and why P95 matters
+- Run a load test with Locust simulating 100 concurrent users
 
 ---
 

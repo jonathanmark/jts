@@ -182,11 +182,11 @@ The rate limiter sits between the API server and the outside world (or inside th
 
 ## What You've Practiced
 
-- ✅ Identifying components from requirements
-- ✅ Drawing boxes and arrows with meaningful labels
-- ✅ Tracing a request end-to-end through the system
-- ✅ Understanding where caching fits
-- ✅ Thinking about failure modes (what breaks if X goes down?)
+- Identifying components from requirements
+- Drawing boxes and arrows with meaningful labels
+- Tracing a request end-to-end through the system
+- Understanding where caching fits
+- Thinking about failure modes (what breaks if X goes down?)
 
 ---
 

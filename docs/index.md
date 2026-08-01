@@ -2,9 +2,9 @@
 
 A **self-paced curriculum** that takes junior software engineers from "I understand CS theory" to "I can contribute to a real production system." All six lectures are built on a real-world blueprint: a real-time, multi-tenant AI Agentic Platform on AWS.
 
-- ⏱️ **Total reading time:** 4–5 hours across all 6 lectures
-- 📅 **Suggested pace:** one lecture + one exercise per day
-- 💰 **Cost:** $0.00 (free tiers + local tools; Exercise 5 optionally ~$0.05 in API credits)
+- **Total reading time:** 4–5 hours across all 6 lectures
+- **Suggested pace:** one lecture + one exercise per day
+- **Cost:** $0.00 (free tiers + local tools; Exercise 5 optionally ~$0.05 in API credits)
 
 ---
 

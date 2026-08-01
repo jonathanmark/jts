@@ -12,7 +12,7 @@
 
 Deploy a **single-page "Hello, Cloud!" website** using S3 and CloudFront. Then extend it by adding a Lambda function and DynamoDB table. By the end, you'll have touched 4 AWS services with real code.
 
-> ⚠️ **COST WARNING:** This exercise uses AWS free tier, but some resources cost money if left running. Estimated cost if you complete the exercise and clean up: **$0.00**. Estimated cost if you forget to delete resources and leave them for a month: **$5-50/month**. Before starting, set a $5 AWS Budget Alert (AWS Console → Billing → Budgets). **Delete all resources when done** — follow the cleanup section at the bottom of this exercise.
+> **COST WARNING:** This exercise uses AWS free tier, but some resources cost money if left running. Estimated cost if you complete the exercise and clean up: **$0.00**. Estimated cost if you forget to delete resources and leave them for a month: **$5-50/month**. Before starting, set a $5 AWS Budget Alert (AWS Console → Billing → Budgets). **Delete all resources when done** — follow the cleanup section at the bottom of this exercise.
 
 ---
 
@@ -72,7 +72,7 @@ Create a file called `index.html` on your local machine:
 </head>
 <body>
     <div class="card">
-        <h1>👋 Hello, I'm [Your Name]</h1>
+        <h1>Hello, I'm [Your Name]</h1>
         <p class="role">Junior Software Engineer</p>
         <div class="counter" id="visitor-count">...</div>
         <p class="counter-label">visitors</p>
@@ -249,12 +249,12 @@ Write down your answers (or discuss with a teammate):
 
 ## What You've Practiced
 
-- ✅ Created and configured an S3 bucket for static website hosting
-- ✅ Wrote and deployed a Lambda function with Python + boto3
-- ✅ Created a DynamoDB table and performed atomic updates
-- ✅ Connected a frontend (HTML) to a serverless backend (Lambda)
-- ✅ Understood IAM roles (Lambda → DynamoDB permissions)
-- ✅ Solved CORS issues with `Access-Control-Allow-Origin`
+- Created and configured an S3 bucket for static website hosting
+- Wrote and deployed a Lambda function with Python + boto3
+- Created a DynamoDB table and performed atomic updates
+- Connected a frontend (HTML) to a serverless backend (Lambda)
+- Understood IAM roles (Lambda → DynamoDB permissions)
+- Solved CORS issues with `Access-Control-Allow-Origin`
 
 ---
 

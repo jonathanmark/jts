@@ -6,7 +6,7 @@
 >
 > **What you'll need:** Python 3.10+, `pip install requests pillow`, an OpenAI API key ($1 of credit is more than enough) OR an AWS account with Bedrock access
 >
-> ⚠️ **No API key?** You can complete most of this exercise (Parts A, B, D, and E) without calling a real model. Part B (image compression) and Part D (prompt experimentation) work entirely offline. For Part C, pair with a teammate who has a key, or use the free-tier credits that come with new OpenAI accounts.
+> **No API key?** You can complete most of this exercise (Parts A, B, D, and E) without calling a real model. Part B (image compression) and Part D (prompt experimentation) work entirely offline. For Part C, pair with a teammate who has a key, or use the free-tier credits that come with new OpenAI accounts.
 
 ---
 
@@ -401,12 +401,12 @@ Change `"detail": "high"` to `"detail": "low"`. Compare token usage and accuracy
 
 ## What You've Practiced
 
-- ✅ Compressed an image programmatically (Pillow → base64)
-- ✅ Called a vision-language model with image + text prompt
-- ✅ Received and parsed structured JSON output from the model
-- ✅ Understood token usage for vision vs. text
-- ✅ Experimented with temperature and prompt engineering
-- ✅ Thought about data privacy implications
+- Compressed an image programmatically (Pillow → base64)
+- Called a vision-language model with image + text prompt
+- Received and parsed structured JSON output from the model
+- Understood token usage for vision vs. text
+- Experimented with temperature and prompt engineering
+- Thought about data privacy implications
 
 ---
 

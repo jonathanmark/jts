@@ -14,9 +14,9 @@ All six lectures are contained in this single file. Each lecture explains a sect
 
 **Recommended order:** Go sequentially (1 → 6). Each lecture builds on the previous one.
 
-⏱️ **Estimated total reading time:** 4-5 hours across all 6 lectures
-📅 **Suggested pace:** One lecture + one exercise per day
-💰 **Total cost to complete:** $0.00 (using free tiers and local tools). Exercise 5 optionally costs ~$0.05 in API credits if you use OpenAI.
+**Estimated total reading time:** 4-5 hours across all 6 lectures
+**Suggested pace:** One lecture + one exercise per day
+**Total cost to complete:** $0.00 (using free tiers and local tools). Exercise 5 optionally costs ~$0.05 in API credits if you use OpenAI.
 
 ---
 
@@ -59,7 +59,7 @@ If you are in a specific role, focus on these lectures first — you can read th
 | 3 | [Lecture 4](#4-authentication-rbac) | JWT handling on the client side |
 | 4 | [Lecture 6](#6-execution-roadmap) | What "done" means for frontend work |
 
-⏱️ ~2.5 hours
+**Estimated time:** ~2.5 hours
 
 ### Backend-Focused (Team Beta in our blueprint)
 
@@ -71,7 +71,7 @@ If you are in a specific role, focus on these lectures first — you can read th
 | 4 | [Lecture 4](#4-authentication-rbac) | Middleware, server-side enforcement |
 | 5 | [Lecture 5](#5-multimodal-vision-pipeline) | Bedrock integration |
 
-⏱️ ~3.5 hours
+**Estimated time:** ~3.5 hours
 
 ---
 
@@ -105,10 +105,10 @@ pip install -r guides/exercises/requirements.txt
 ## The Exercises
 
 Each exercise is designed to be:
-- ✅ **Local-first:** Runs on your laptop. No cloud account required (except Exercise 2, which uses AWS free tier).
-- ✅ **45-75 minutes:** Fits in a focused work session. Not an all-day ordeal.
-- ✅ **Real tools:** You'll use the same libraries and patterns we use in production (FastAPI, Redis, boto3, JWT, Locust).
-- ✅ **Self-checking:** Each exercise has a checklist so you know when you're done.
+- **Local-first:** Runs on your laptop. No cloud account required (except Exercise 2, which uses AWS free tier).
+- **45-75 minutes:** Fits in a focused work session. Not an all-day ordeal.
+- **Real tools:** You'll use the same libraries and patterns we use in production (FastAPI, Redis, boto3, JWT, Locust).
+- **Self-checking:** Each exercise has a checklist so you know when you're done.
 
 | Exercise | Topic | Tools You'll Use |
 |---|---|---|
@@ -116,7 +116,7 @@ Each exercise is designed to be:
 | [Exercise 2](exercises/exercise-02-cloud-services-mapping.md) | Cloud services | AWS S3, Lambda, DynamoDB, boto3 |
 | [Exercise 3](exercises/exercise-03-latency-budget.md) | Performance & caching | Python, Flask, Redis, Locust |
 | [Exercise 4](exercises/exercise-04-jwt-rbac.md) | Auth & RBAC | Python, FastAPI, PyJWT |
-| [Exercise 5](exercises/exercise-05-vision-api.md) | Vision AI | Python, Pillow, OpenAI/Bedrock API | ⚠️ Requires API key (~$0.01/image). See exercise for zero-cost alternatives. |
+| [Exercise 5](exercises/exercise-05-vision-api.md) | Vision AI | Python, Pillow, OpenAI/Bedrock API | Requires API key (~$0.01/image). See exercise for zero-cost alternatives. |
 | [Exercise 6](exercises/exercise-06-project-planning.md) | Project planning | Text editor / paper |
 
 ---
@@ -311,7 +311,7 @@ Total time: ~1.2 seconds. This is the power of understanding architecture — yo
 - Know the three patterns: Client-Server, Microservices, Event-Driven.
 - **Your job as a junior is not to design the architecture — it's to understand it well enough to place your code in the right spot and debug effectively.**
 
-👉 **Exercise:** [Exercise 1: Draw Your First Architecture Diagram](exercises/exercise-01-draw-architecture.md)
+**Exercise:** [Exercise 1: Draw Your First Architecture Diagram](exercises/exercise-01-draw-architecture.md)
 
 ---
 
@@ -552,7 +552,7 @@ You're expected to reach Phase 2 within your first month. Phase 3 (IaC) by month
 - Progression: Console → CLI → Infrastructure as Code.
 - **The cloud is not magic — it's just someone else's computer, with a very good API.**
 
-👉 **Exercise:** [Exercise 2: Cloud Services Mapping](exercises/exercise-02-cloud-services-mapping.md)
+**Exercise:** [Exercise 2: Cloud Services Mapping](exercises/exercise-02-cloud-services-mapping.md)
 
 ---
 
@@ -675,11 +675,11 @@ Cache invalidation is the hard part. "There are only two hard things in Computer
 ```
 Traditional (Request → Wait → Full Response):
 [Send request] ────────────────────────────────── [Receive full response]
-                ⏳ User stares at spinner for 1.5s
+                User stares at spinner for 1.5s
 
 Streaming (Request → Stream tokens → Build response):
 [Send request] ── [token1] ── [token2] ── [token3] ── ... ── [Done]
-                 👁️ User sees text appearing within 300ms
+                 User sees text appearing within 300ms
 ```
 
 ### How SSE (Server-Sent Events) Works
@@ -744,9 +744,9 @@ This is the single most important performance decision in our architecture:
 ### The Wrong Way (What NOT to Do)
 
 ```
-❌ Embed EVERYTHING (spreadsheets + wiki) into vectors
-❌ Every user question → vector search → find similar content → feed to LLM
-❌ "What's order #8821 status?" → vector search through 50,000 spreadsheet rows → LLM guesses → WRONG
+Embed EVERYTHING (spreadsheets + wiki) into vectors
+Every user question → vector search → find similar content → feed to LLM
+"What's order #8821 status?" → vector search through 50,000 spreadsheet rows → LLM guesses → WRONG
 ```
 
 **Problem:** Vector search is ~150ms. SQL lookup is ~20ms. Using vectors for exact data is 7.5x slower AND less accurate.
@@ -898,7 +898,7 @@ locust -f locustfile.py --host=https://api.staging.company.com --users 1000 --sp
 - **Structured data → SQL. Unstructured data → Vector search.** Never embed spreadsheet rows.
 - **Load test** before you launch. If you haven't tested 1,000 concurrent users, you don't know if your system works.
 
-👉 **Exercise:** [Exercise 3: Measure and Optimize Latency](exercises/exercise-03-latency-budget.md)
+**Exercise:** [Exercise 3: Measure and Optimize Latency](exercises/exercise-03-latency-budget.md)
 
 ---
 
@@ -1001,12 +1001,12 @@ The trade-off: You can't "revoke" a JWT before it expires. Once issued, it's val
 ### How to Decode a JWT (NEVER Trust the Payload Without Verifying!)
 
 ```python
-# ❌ WRONG — Never decode without verification!
+# INCORRECT — Never decode without verification!
 import base64, json
 payload = json.loads(base64.b64decode(token.split('.')[1] + '=='))
 # Attacker could modify the payload and you'd never know!
 
-# ✅ CORRECT — Always verify the signature
+# CORRECT — Always verify the signature
 import jwt
 from jwt.algorithms import RSAAlgorithm
 import requests
@@ -1170,7 +1170,7 @@ This is **defense in depth**: the backend blocks unauthorized API calls, AND the
 
 ### The "Never Do This" List
 
-| ❌ Never | ✅ Always |
+| Never | Always |
 |---|---|
 | Store JWT in `localStorage` (vulnerable to XSS) | Store JWT in an `httpOnly` cookie or secure memory |
 | Hardcode secrets in source code | Use environment variables or AWS Secrets Manager |
@@ -1231,7 +1231,7 @@ Before you merge any code that touches auth, verify:
 - Defense in depth: Backend middleware blocks API calls. AI system prompt prevents hallucinated answers.
 - **Security is not a feature. It's a property of every feature.**
 
-👉 **Exercise:** [Exercise 4: Build a JWT + RBAC System](exercises/exercise-04-jwt-rbac.md)
+**Exercise:** [Exercise 4: Build a JWT + RBAC System](exercises/exercise-04-jwt-rbac.md)
 
 ---
 
@@ -1292,16 +1292,16 @@ You don't need to understand the math, but you should understand the pipeline:
 ### What This Means for You (The Developer)
 
 You don't need to:
-- ❌ Train a vision model
-- ❌ Run image preprocessing pipelines
-- ❌ Manage GPU memory for inference
-- ❌ Understand convolutional neural networks
+- Train a vision model
+- Run image preprocessing pipelines
+- Manage GPU memory for inference
+- Understand convolutional neural networks
 
 You DO need to:
-- ✅ Send images in the right format (base64 or S3 URL)
-- ✅ Compress images before sending (network bandwidth matters)
-- ✅ Write good text prompts that reference the image
-- ✅ Handle the structured diagnostic output
+- Send images in the right format (base64 or S3 URL)
+- Compress images before sending (network bandwidth matters)
+- Write good text prompts that reference the image
+- Handle the structured diagnostic output
 
 ---
 
@@ -1509,17 +1509,17 @@ async def diagnose(
 
 ```
 base64 (inline):
-  ✅ Simpler — one request, no upload step
-  ✅ Good for images < 500KB
-  ❌ ~33% size overhead
-  ❌ Slower for large images (blocking request)
+  + Simpler — one request, no upload step
+  + Good for images < 500KB
+  - ~33% size overhead
+  - Slower for large images (blocking request)
 
 S3 Presigned URL:
-  ✅ No size limit within reason
-  ✅ Async upload (non-blocking)
-  ✅ Better for batch processing
-  ❌ Two-step: upload to S3, then send URL to API
-  ❌ S3 costs (negligible but non-zero)
+  + No size limit within reason
+  + Async upload (non-blocking)
+  + Better for batch processing
+  - Two-step: upload to S3, then send URL to API
+  - S3 costs (negligible but non-zero)
 ```
 
 **Our rule:** Use base64 for chat images (< 500KB). Use S3 presigned URLs for batch uploads, reports, and archival.
@@ -1624,7 +1624,7 @@ for the support agent to follow. Consider both hardware and software causes.
 - Use Haiku for quick triage ("damaged or not?"). Use Sonnet for detailed diagnosis.
 - **The model is a tool, not magic. Give it good images and good prompts, and it will give you good answers.**
 
-👉 **Exercise:** [Exercise 5: Call a Vision Model API](exercises/exercise-05-vision-api.md)
+**Exercise:** [Exercise 5: Call a Vision Model API](exercises/exercise-05-vision-api.md)
 
 ---
 
@@ -1923,7 +1923,7 @@ Your work is done when:
 - "Done" has a checklist. Use it.
 - **The best junior engineers are not the ones who write the most code — they're the ones who reliably deliver complete, tested, documented features on time.**
 
-👉 **Exercise:** [Exercise 6: Plan a Mini Roadmap](exercises/exercise-06-project-planning.md)
+**Exercise:** [Exercise 6: Plan a Mini Roadmap](exercises/exercise-06-project-planning.md)
 
 ---
 

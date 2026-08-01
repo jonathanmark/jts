@@ -221,12 +221,12 @@ Answer these questions honestly:
 
 ## What You've Practiced
 
-- ✅ Broken a project into time-boxed phases with clear goals
-- ✅ Assigned frontend/backend work per phase
-- ✅ Identified dependencies (what blocks what)
-- ✅ Assessed risks and planned mitigations
-- ✅ Defined a "done" checklist
-- ✅ Planned a concrete first day of work
+- Broken a project into time-boxed phases with clear goals
+- Assigned frontend/backend work per phase
+- Identified dependencies (what blocks what)
+- Assessed risks and planned mitigations
+- Defined a "done" checklist
+- Planned a concrete first day of work
 
 ---
 
