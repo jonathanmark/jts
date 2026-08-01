@@ -553,8 +553,8 @@ html::-webkit-scrollbar {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 0.32rem 0.62rem;
-  border-radius: 6px;
+  padding: 0.34rem 0.7rem;
+  border-radius: 8px;           /* plain rounded square — no balloon arrow */
   box-shadow: 0 2px 8px rgba(20, 56, 43, 0.28);
   pointer-events: none;
   opacity: 0;
@@ -562,17 +562,29 @@ html::-webkit-scrollbar {
   transition: opacity 0.15s ease, transform 0.15s ease;
   white-space: nowrap;
 }
-.md-hover-tip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: var(--md-primary-fg-color);
-}
 .md-hover-tip--show {
   opacity: 1;
   transform: none;
+}
+
+/* ---- Scrollspy: current section highlight ------------------------------- */
+
+/* Material's built-in TOC scrollspy only recolours the active link; we drive
+   a single, consistent highlight with `.md-nav__link--current` instead. */
+.md-sidebar--secondary .md-nav__link--active {
+  color: inherit;
+}
+
+.md-nav__link--current {
+  color: var(--md-typeset-a-color) !important;
+  background: var(--md-accent-fg-color--transparent);
+  border-radius: 4px;
+  box-shadow: inset 3px 0 0 var(--md-accent-fg-color);
+}
+
+/* Breadcrumb: while reading a sub-section, the containing lecture stays
+   visible in the table of contents as a quieter accent-coloured label. */
+.md-sidebar--secondary .md-nav__link--parent {
+  color: var(--md-accent-fg-color);
 }
 

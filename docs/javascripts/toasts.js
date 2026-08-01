@@ -209,9 +209,11 @@
       tip.textContent = text;
       tip.classList.add("md-hover-tip--show");
       var r = anchor.getBoundingClientRect();
-      var tw = tip.offsetWidth, th = tip.offsetHeight;
+      var header = document.querySelector(".md-header");
+      var hr = header ? header.getBoundingClientRect() : r;
+      var tw = tip.offsetWidth;
       var x = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), window.innerWidth - tw - 8);
-      var y = r.bottom + 9;
+      var y = hr.bottom + 8; // below the header bar
       tip.style.left = x + "px";
       tip.style.top = y + "px";
     }

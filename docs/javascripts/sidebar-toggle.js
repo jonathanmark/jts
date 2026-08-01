@@ -18,7 +18,9 @@
     function restore() {
       try {
         if (localStorage.getItem("md-hide-nav") === "1") body.classList.add("md-hide-nav");
-        if (localStorage.getItem("md-hide-toc") === "1") body.classList.add("md-hide-toc");
+        // Table of contents is hidden by default; only shown when the user
+        // explicitly turns it on.
+        if (localStorage.getItem("md-hide-toc") !== "0") body.classList.add("md-hide-toc");
       } catch (e) { /* localStorage unavailable — ignore */ }
     }
 
