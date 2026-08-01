@@ -1,0 +1,70 @@
+# MkDocs configuration for the Junior Engineer Onboarding Guide
+# Docs: https://squidfunk.github.io/mkdocs-material/
+#
+# Personal site: the repo must be named <username>.github.io,
+# e.g. https://github.com/jonathanmark/jonathanmark.github.io
+
+site_name: Junior Engineer Onboarding Guide
+site_description: Self-paced onboarding curriculum for junior software engineers — from CS theory to production systems.
+site_url: https://jonathanmark.github.io/
+repo_url: https://github.com/jonathanmark/jonathanmark.github.io
+
+# Content lives in the standard docs/ directory (default docs_dir).
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
+
+# MkDocs 1.6.x emits false-positive "not found" warnings for nav entries that
+# link to a heading anchor (e.g. guides/#1-system-architecture). The links
+# themselves render and resolve correctly, so downgrade the noise to INFO.
+validation:
+  nav:
+    not_found: info
+
+nav:
+  - Home: index.md
+  - Guide:
+      - Full Guide (one long page): guides/README.md
+      - Lecture 1 – System Architecture: guides/#1-system-architecture
+      - Lecture 2 – AWS Services: guides/#2-aws-services
+      - Lecture 3 – Performance Strategy: guides/#3-performance-strategy
+      - Lecture 4 – Authentication & RBAC: guides/#4-authentication-rbac
+      - Lecture 5 – Multimodal Vision Pipeline: guides/#5-multimodal-vision-pipeline
+      - Lecture 6 – Execution Roadmap: guides/#6-execution-roadmap
+      - Master Glossary: guides/#master-glossary
+  - Exercises:
+      - Exercise 1 – Draw Your First Architecture: guides/exercises/exercise-01-draw-architecture.md
+      - Exercise 2 – Deploy a Serverless Web App: guides/exercises/exercise-02-cloud-services-mapping.md
+      - Exercise 3 – Measure and Optimize API Latency: guides/exercises/exercise-03-latency-budget.md
+      - Exercise 4 – Build a JWT + RBAC System: guides/exercises/exercise-04-jwt-rbac.md
+      - Exercise 5 – Call a Vision Model API: guides/exercises/exercise-05-vision-api.md
+      - Exercise 6 – Plan a Mini Roadmap: guides/exercises/exercise-06-project-planning.md
+  - Appendix:
+      - Requirements & Product Architecture: requirements-and-architecture.md
