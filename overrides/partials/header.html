@@ -65,11 +65,14 @@
       {% if not config.theme.palette is mapping %}
         {% include "partials/javascripts/palette.html" %}
       {% endif %}
-      <button class="md-header__button md-icon" type="button" data-md-toggle="nav" aria-label="Toggle navigation sidebar" title="Toggle navigation sidebar">
+      <button class="md-header__button md-icon" type="button" data-md-toggle="nav" aria-label="Toggle navigation sidebar">
         {% include ".icons/material/page-layout-sidebar-left.svg" %}
       </button>
-      <button class="md-header__button md-icon" type="button" data-md-toggle="toc" aria-label="Toggle table of contents" title="Toggle table of contents">
+      <button class="md-header__button md-icon" type="button" data-md-toggle="toc" aria-label="Toggle table of contents">
         {% include ".icons/material/page-layout-sidebar-right.svg" %}
+      </button>
+      <button class="md-header__button md-icon" type="button" data-md-component="toasts" aria-label="Toggle toasts">
+        {% include ".icons/material/coffee.svg" %}
       </button>
     </div>
     {% if config.repo_url %}

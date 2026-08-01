@@ -62,6 +62,7 @@ extra_javascript:
   - javascripts/mermaid-init.js
   - javascripts/sidebar-toggle.js
   - javascripts/scroll-end.js
+  - javascripts/toasts.js
 
 # Remove the "Made with Material for MkDocs" watermark from the footer.
 extra:
