@@ -36,14 +36,6 @@
         </div>
       </div>
     </div>
-    {% if config.theme.palette %}
-      {% if not config.theme.palette is mapping %}
-        {% include "partials/palette.html" %}
-      {% endif %}
-    {% endif %}
-    {% if not config.theme.palette is mapping %}
-      {% include "partials/javascripts/palette.html" %}
-    {% endif %}
     {% if config.extra.alternate %}
       {% include "partials/alternate.html" %}
     {% endif %}
@@ -57,12 +49,29 @@
         {% include "partials/search.html" %}
       {% endif %}
     {% endif %}
-    <button class="md-header__button md-icon" type="button" data-md-toggle="nav" aria-label="Toggle navigation sidebar" title="Toggle navigation sidebar">
-      {% include ".icons/material/page-layout-sidebar-left.svg" %}
-    </button>
-    <button class="md-header__button md-icon" type="button" data-md-toggle="toc" aria-label="Toggle table of contents" title="Toggle table of contents">
-      {% include ".icons/material/page-layout-sidebar-right.svg" %}
-    </button>
+    <!-- Grouped header controls: back · full guide · dark/light · sidebars -->
+    <div class="md-header__controls">
+      <button class="md-header__button md-icon" type="button" data-md-component="back" aria-label="Go back" title="Go back">
+        {% include ".icons/material/arrow-left.svg" %}
+      </button>
+      <a href="{{ 'guides/' | url }}" class="md-header__button md-icon" title="Open the full guide" aria-label="Open the full guide">
+        {% include ".icons/material/book-open-variant.svg" %}
+      </a>
+      {% if config.theme.palette %}
+        {% if not config.theme.palette is mapping %}
+          {% include "partials/palette.html" %}
+        {% endif %}
+      {% endif %}
+      {% if not config.theme.palette is mapping %}
+        {% include "partials/javascripts/palette.html" %}
+      {% endif %}
+      <button class="md-header__button md-icon" type="button" data-md-toggle="nav" aria-label="Toggle navigation sidebar" title="Toggle navigation sidebar">
+        {% include ".icons/material/page-layout-sidebar-left.svg" %}
+      </button>
+      <button class="md-header__button md-icon" type="button" data-md-toggle="toc" aria-label="Toggle table of contents" title="Toggle table of contents">
+        {% include ".icons/material/page-layout-sidebar-right.svg" %}
+      </button>
+    </div>
     {% if config.repo_url %}
       <div class="md-header__source">
         {% include "partials/source.html" %}

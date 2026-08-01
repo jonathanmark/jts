@@ -35,6 +35,19 @@
       });
     }
 
+    // Back button: return to the previous page in one click (falls back home).
+    var backBtn = document.querySelector('[data-md-component="back"]');
+    if (backBtn) {
+      backBtn.addEventListener("click", function () {
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          var home = document.querySelector('a.md-logo');
+          window.location.href = home ? home.getAttribute("href") : "/";
+        }
+      });
+    }
+
     restore();
   });
 })();

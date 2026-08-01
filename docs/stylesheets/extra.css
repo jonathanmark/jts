@@ -215,6 +215,32 @@ body.md-hide-toc [data-md-toggle="toc"] {
   color: var(--md-accent-fg-color);
 }
 
+/* ---- Grouped header controls -------------------------------------------- */
+
+/* Back · Full Guide · dark/light · sidebars live together in one cluster,
+   separated from the rest of the header by a hairline rule. */
+.md-header__controls {
+  display: flex;
+  align-items: center;
+  margin-left: 0.4rem;
+  padding-left: 0.4rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+}
+.md-header__controls a.md-header__button {
+  color: inherit;
+}
+.md-header__controls a.md-header__button:hover {
+  color: var(--md-accent-fg-color);
+}
+/* On small screens keep the cluster compact: hide the sidebar toggles
+   (navigation is the drawer there, and the TOC is hidden anyway). */
+@media screen and (max-width: 60em) {
+  .md-header__controls [data-md-toggle="nav"],
+  .md-header__controls [data-md-toggle="toc"] {
+    display: none;
+  }
+}
+
 /* ---- Hideable sidebars (focus mode) ------------------------------------- */
 
 body.md-hide-nav .md-sidebar--primary,

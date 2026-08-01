@@ -82,7 +82,6 @@ validation:
 nav:
   - Home: index.md
   - Guide:
-      - Full Guide (one long page): guides/README.md
       - Lecture 1 – System Architecture: guides/#1-system-architecture
       - Lecture 2 – AWS Services: guides/#2-aws-services
       - Lecture 3 – Performance Strategy: guides/#3-performance-strategy
