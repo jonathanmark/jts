@@ -40,6 +40,12 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+# Self-hosted Mermaid (v11) for diagrams. Material for MkDocs renders Mermaid
+# fences itself, theming them through --md-mermaid-* CSS variables so they
+# follow our industrial palette (serif fonts, copper nodes, ivory paper).
+extra_javascript:
+  - javascripts/mermaid.min.js
+
 # Remove the "Made with Material for MkDocs" watermark from the footer.
 extra:
   generator: false
@@ -47,7 +53,11 @@ extra:
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - tables

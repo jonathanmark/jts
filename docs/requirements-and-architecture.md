@@ -6,27 +6,28 @@ Here is a comprehensive enterprise blueprint and implementation roadmap to build
 
 To support **1,000 concurrent agents** with an **end-to-end response time of $<1.5\text{s}$**, we cannot rely solely on standard Retrieval-Augmented Generation (RAG). We must implement a hybrid architecture: **SQL Tool Calling for structured data** (Customer/Sales XLS), **Vector Search for unstructured data** (Wiki), and **Aggressive Multi-Layer Caching**.
 
-```
-[ Agent UI (React + WebSockets/SSE) ]
-                 │
-                 ▼
-     [ CloudFront + S3 (CDN) ]
-                 │
-                 ▼
-    [ Application Load Balancer ]
-                 │
-                 ▼
-[ FastAPIs on AWS ECS Fargate (Auto-scaling) ] ◄── Authentication via AWS Cognito (JWT)
-   │               │                 │
-   ├── (Cache) ────┼── (Structured) ─┼── (Vector)
-   ▼               ▼                 ▼
-[ ElastiCache ]  [ Aurora Postgres ] [ OpenSearch Serverless ]
-(Redis Session)  (Customer/Sales)    (Wiki Embeddings)
-   │
-   └───────────────► [ Amazon Bedrock ]
-                     (Claude 3.5 Haiku / Sonnet Vision LLM)
+```mermaid
+flowchart TD
+    UI["Agent UI<br/>React + WebSockets/SSE"]
+    CDN["CloudFront + S3<br/>CDN"]
+    ALB["Application Load Balancer"]
+    API["FastAPI<br/>AWS ECS Fargate · Auto-scaling"]
+    AUTH["AWS Cognito<br/>JWT Authentication"]
+    CACHE["ElastiCache<br/>Redis · Session"]
+    DB["Aurora PostgreSQL<br/>Customer / Sales"]
+    VEC["OpenSearch Serverless<br/>Wiki Embeddings"]
+    LLM["Amazon Bedrock<br/>Claude 3.5 Haiku / Sonnet Vision"]
 
+    UI --> CDN --> ALB --> API
+    AUTH -. "JWT" .-> API
+    API -->|"Cache"| CACHE
+    API -->|"Structured"| DB
+    API -->|"Vector"| VEC
+    CACHE -->|"cache miss"| LLM
+    API -->|"new queries"| LLM
 ```
+
+> The onboarding guide ([guides/README.md](guides/README.md)) presents this same architecture as technical, business/context, and UML sequence views.
 
 ---
 
@@ -52,14 +53,14 @@ To help our junior engineers get up to speed quickly, here is how AWS services m
 
 To guarantee responses in under 1.5 seconds under high concurrent load:
 
-```
-Total Latency Target: < 1,500 ms
-├─ Network RTT + ALB: ~50 ms
-├─ Auth + JWT Validation: ~10 ms
-├─ Redis Caching / SQL Lookups: ~40 ms
-├─ Context Retrieval (RAG): ~150 ms
-└─ LLM Time to First Token (TTFT) via Bedrock (Streaming): ~800-1000 ms
-
+```mermaid
+pie showData title Latency Budget (% of 1,500 ms target)
+    "Network RTT + ALB" : 3.3
+    "Auth + JWT Validation" : 0.7
+    "Redis Caching / SQL Lookups" : 2.7
+    "Context Retrieval (RAG)" : 10
+    "LLM Time to First Token (TTFT)" : 60
+    "Headroom" : 23.3
 ```
 
 ### Key Latency Rules
@@ -78,20 +79,16 @@ Total Latency Target: < 1,500 ms
 
 ### Department Access Control Matrix
 
-```
-                          ┌───────────────────────────┐
-                          │    Agent Authenticated    │
-                          │   (Cognito JWT Scope)     │
-                          └─────────────┬─────────────┘
-                                        │
-             ┌──────────────────────────┼──────────────────────────┐
-             ▼                          ▼                          ▼
-     [ Dept: General ]          [ Dept: Finance ]          [ Dept: Logistics ]
-   - Account Details          - Account Details          - Account Details
-   - Product Wiki             - Product Wiki             - Product Wiki
-   - Tech Troubleshooting     - Tech Troubleshooting     - Tech Troubleshooting
-   - basic_info_tool          - refund_process_tool      - shipment_tracking_tool
+```mermaid
+flowchart TD
+    AUTH["Agent Authenticated<br/>(Cognito JWT Scope)"]
+    AUTH --> G["Dept: General"]
+    AUTH --> F["Dept: Finance"]
+    AUTH --> L["Dept: Logistics"]
 
+    G --> GP["Account Details<br/>Product Wiki<br/>Tech Troubleshooting<br/>basic_info_tool"]
+    F --> FP["Account Details<br/>Product Wiki<br/>Tech Troubleshooting<br/>refund_process_tool"]
+    L --> LP["Account Details<br/>Product Wiki<br/>Tech Troubleshooting<br/>shipment_tracking_tool"]
 ```
 
 ### Backend Enforcement (FastAPI Middleware)
@@ -170,13 +167,15 @@ To ensure clear ownership, pair your junior developers into 2 functional sub-tea
 * **Team Alpha (Dev 1 & Dev 2):** Frontend (React) + Auth/Security + API Integration.
 * **Team Beta (Dev 3 & Dev 4):** Backend (FastAPI) + AWS Data Pipelines (ETL) + Bedrock LLM Orchestration.
 
-```
-       Month 1          Month 2          Month 3          Month 4          Month 5          Month 6
-  ┌────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────┐
-  │ Phase 1: Setup │ Phase 2: Ingest│ Phase 3: RAG   │ Phase 4: UI    │ Phase 5: Perf  │ Phase 6: Launch│
-  │ Infra & Auth   │ Data & APIs    │ & Vision Engine│ & Workflows    │ & Optimization │ & Hardening    │
-  └────────────────┴────────────────┴────────────────┴────────────────┴────────────────┴────────────────┘
-
+```mermaid
+timeline
+    title 6-Month Roadmap
+    Month 1 : Phase 1 · Setup Infra & Auth
+    Month 2 : Phase 2 · Ingest Data & APIs
+    Month 3 : Phase 3 · RAG & Vision Engine
+    Month 4 : Phase 4 · UI & Workflows
+    Month 5 : Phase 5 · Performance & Optimization
+    Month 6 : Phase 6 · Launch & Hardening
 ```
 
 ### Phase 1: Foundation & Auth Setup (Month 1)

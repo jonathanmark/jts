@@ -64,16 +64,14 @@ Open [Excalidraw](https://excalidraw.com) (free, no account needed) or use pen a
 
 ### Template to start from:
 
-```
-[User's Browser]
-      │
-      │  HTTP POST /api/shorten  { "url": "https://example.com/very-long-url" }
-      ▼
-[Web Server / API] ──── generates short code ────► [Database]
-      │                                               (short_code → original_url)
-      │  HTTP Response  { "short_url": "https://short.link/abc123" }
-      ▼
-[User's Browser] shows the short link
+```mermaid
+flowchart TD
+    B["User's Browser"]
+    B -->|"HTTP POST /api/shorten<br/>{ url: 'https://example.com/very-long-url' }"| W["Web Server / API"]
+    W -->|"generates short code"| D[("Database<br/>short_code → original_url")]
+    W -->|"HTTP Response<br/>{ short_url: 'https://short.link/abc123' }"| B
+    B -->|"click short link"| W
+    W -->|"HTTP 302 → original URL"| B
 ```
 
 Now add:

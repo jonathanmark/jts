@@ -14,9 +14,9 @@ All six lectures are contained in this single file. Each lecture explains a sect
 
 **Recommended order:** Go sequentially (1 → 6). Each lecture builds on the previous one.
 
-**Estimated total reading time:** 4-5 hours across all 6 lectures
-**Suggested pace:** One lecture + one exercise per day
-**Total cost to complete:** $0.00 (using free tiers and local tools). Exercise 5 optionally costs ~$0.05 in API credits if you use OpenAI.
+⏱️ **Estimated total reading time:** 4-5 hours across all 6 lectures
+📅 **Suggested pace:** One lecture + one exercise per day
+💰 **Total cost to complete:** $0.00 (using free tiers and local tools). Exercise 5 optionally costs ~$0.05 in API credits if you use OpenAI.
 
 ---
 
@@ -40,7 +40,7 @@ If you only have time for the essentials right now:
 | 1 | [System Architecture](#1-system-architecture) | How to read architecture diagrams, trace requests, understand client-server/microservices/event-driven patterns | [Draw your first architecture diagram](exercises/exercise-01-draw-architecture.md) |
 | 2 | [AWS Services](#2-aws-services) | How cloud services map to CS fundamentals, what each AWS service does, managed vs. unmanaged trade-offs | [Deploy a serverless web app](exercises/exercise-02-cloud-services-mapping.md) |
 | 3 | [Performance Strategy](#3-performance-strategy) | Latency budgets, caching strategies, streaming (SSE), structured vs. unstructured data, load testing | [Measure and optimize API latency](exercises/exercise-03-latency-budget.md) |
-| 4 | [Authentication & RBAC](#4-authentication-rbac) | AuthN vs. AuthZ, JWT tokens (how they work and why they're brilliant), role-based access control, defense in depth | [Build a JWT + RBAC system](exercises/exercise-04-jwt-rbac.md) |
+| 4 | [Authentication & RBAC](#4-authentication--rbac) | AuthN vs. AuthZ, JWT tokens (how they work and why they're brilliant), role-based access control, defense in depth | [Build a JWT + RBAC system](exercises/exercise-04-jwt-rbac.md) |
 | 5 | [Multimodal Vision Pipeline](#5-multimodal-vision-pipeline) | How vision-language models work, image compression, prompt engineering for vision, debugging model output | [Call a vision model API](exercises/exercise-05-vision-api.md) |
 | 6 | [Execution Roadmap](#6-execution-roadmap) | How 6-month projects are structured, what each phase means for you, working in sub-teams, what "done" looks like | [Plan a mini roadmap](exercises/exercise-06-project-planning.md) |
 
@@ -56,10 +56,10 @@ If you are in a specific role, focus on these lectures first — you can read th
 |---|---|---|
 | 1 | [Lecture 1](#1-system-architecture) | Understand the big picture — every developer needs this |
 | 2 | [Lecture 2](#2-aws-services) | Focus on S3, CloudFront, Cognito |
-| 3 | [Lecture 4](#4-authentication-rbac) | JWT handling on the client side |
+| 3 | [Lecture 4](#4-authentication--rbac) | JWT handling on the client side |
 | 4 | [Lecture 6](#6-execution-roadmap) | What "done" means for frontend work |
 
-**Estimated time:** ~2.5 hours
+⏱️ ~2.5 hours
 
 ### Backend-Focused (Team Beta in our blueprint)
 
@@ -68,10 +68,10 @@ If you are in a specific role, focus on these lectures first — you can read th
 | 1 | [Lecture 1](#1-system-architecture) | Understand the big picture — every developer needs this |
 | 2 | [Lecture 2](#2-aws-services) | All services, especially ECS, Aurora, Bedrock |
 | 3 | [Lecture 3](#3-performance-strategy) | Caching, streaming, load testing |
-| 4 | [Lecture 4](#4-authentication-rbac) | Middleware, server-side enforcement |
+| 4 | [Lecture 4](#4-authentication--rbac) | Middleware, server-side enforcement |
 | 5 | [Lecture 5](#5-multimodal-vision-pipeline) | Bedrock integration |
 
-**Estimated time:** ~3.5 hours
+⏱️ ~3.5 hours
 
 ---
 
@@ -105,10 +105,10 @@ pip install -r guides/exercises/requirements.txt
 ## The Exercises
 
 Each exercise is designed to be:
-- **Local-first:** Runs on your laptop. No cloud account required (except Exercise 2, which uses AWS free tier).
-- **45-75 minutes:** Fits in a focused work session. Not an all-day ordeal.
-- **Real tools:** You'll use the same libraries and patterns we use in production (FastAPI, Redis, boto3, JWT, Locust).
-- **Self-checking:** Each exercise has a checklist so you know when you're done.
+- ✅ **Local-first:** Runs on your laptop. No cloud account required (except Exercise 2, which uses AWS free tier).
+- ✅ **45-75 minutes:** Fits in a focused work session. Not an all-day ordeal.
+- ✅ **Real tools:** You'll use the same libraries and patterns we use in production (FastAPI, Redis, boto3, JWT, Locust).
+- ✅ **Self-checking:** Each exercise has a checklist so you know when you're done.
 
 | Exercise | Topic | Tools You'll Use |
 |---|---|---|
@@ -116,7 +116,7 @@ Each exercise is designed to be:
 | [Exercise 2](exercises/exercise-02-cloud-services-mapping.md) | Cloud services | AWS S3, Lambda, DynamoDB, boto3 |
 | [Exercise 3](exercises/exercise-03-latency-budget.md) | Performance & caching | Python, Flask, Redis, Locust |
 | [Exercise 4](exercises/exercise-04-jwt-rbac.md) | Auth & RBAC | Python, FastAPI, PyJWT |
-| [Exercise 5](exercises/exercise-05-vision-api.md) | Vision AI | Python, Pillow, OpenAI/Bedrock API | Requires API key (~$0.01/image). See exercise for zero-cost alternatives. |
+| [Exercise 5](exercises/exercise-05-vision-api.md) | Vision AI | Python, Pillow, OpenAI/Bedrock API | ⚠️ Requires API key (~$0.01/image). See exercise for zero-cost alternatives. |
 | [Exercise 6](exercises/exercise-06-project-planning.md) | Project planning | Text editor / paper |
 
 ---
@@ -166,76 +166,27 @@ You might think architecture is "senior engineer stuff." It's not. Here's why yo
 
 ## 1.3 How to Read an Architecture Diagram
 
-Let's break down the architecture diagram from our blueprint step by step. Here is the same architecture from three angles — technical, business/context, and a UML request flow.
+Let's break down the architecture diagram from our blueprint step by step. Here's the full diagram:
 
-**View 1 — Technical architecture**
-
-```mermaid
-flowchart TD
-    UI["Agent UI<br/>React + WebSockets/SSE"]
-    CDN["CloudFront + S3<br/>CDN"]
-    ALB["Application Load Balancer"]
-    API["FastAPI<br/>AWS ECS Fargate · Auto-scaling"]
-    AUTH["AWS Cognito<br/>JWT Authentication"]
-    CACHE["ElastiCache<br/>Redis · Session"]
-    DB["Aurora PostgreSQL<br/>Customer / Sales"]
-    VEC["OpenSearch Serverless<br/>Wiki Embeddings"]
-    LLM["Amazon Bedrock<br/>Claude 3.5 Haiku / Sonnet Vision"]
-
-    UI --> CDN --> ALB --> API
-    AUTH -. "JWT" .-> API
-    API -->|"Cache"| CACHE
-    API -->|"Structured"| DB
-    API -->|"Vector"| VEC
-    CACHE -->|"cache miss"| LLM
-    API -->|"new queries"| LLM
 ```
-
-**View 2 — Business / context**
-
-```mermaid
-flowchart LR
-    AGENT["Support Agent"]
-    subgraph PLATFORM["AI Agentic Platform (AWS)"]
-        UI["Agent Console<br/>React Web App"]
-        API["FastAPI Backend"]
-        AUTH["AWS Cognito<br/>Identity"]
-        DATA["Data Layer<br/>SQL · Vector · Cache"]
-        AI["Amazon Bedrock<br/>Claude Models"]
-        UI --> API
-        API --> AUTH
-        API --> DATA
-        API --> AI
-    end
-    AGENT -->|"browser session"| UI
-```
-
-**View 3 — Request flow (UML sequence)**
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant UI as Agent UI (React)
-    participant CDN as CloudFront
-    participant ALB as Application Load Balancer
-    participant API as FastAPI (ECS Fargate)
-    participant CACHE as ElastiCache (Redis)
-    participant DB as Aurora PostgreSQL
-    participant LLM as Amazon Bedrock
-
-    UI->>CDN: HTTPS POST /api/chat (JWT)
-    CDN->>ALB: Forward request
-    ALB->>API: Route to healthy container
-    API->>CACHE: Look up semantic cache
-    alt Cache hit
-        CACHE-->>API: Cached response (~40 ms)
-    else Cache miss
-        API->>DB: SQL: SELECT status FROM orders...
-        DB-->>API: Order rows (~20 ms)
-        API->>LLM: Prompt + retrieved context (Claude 3.5)
-        LLM-->>API: Streamed tokens
-    end
-    API-->>UI: SSE stream (first token < 1 s)
+[ Agent UI (React + WebSockets/SSE) ]
+                 │
+                 ▼
+     [ CloudFront + S3 (CDN) ]
+                 │
+                 ▼
+    [ Application Load Balancer ]
+                 │
+                 ▼
+[ FastAPIs on AWS ECS Fargate (Auto-scaling) ] ◄── Authentication via AWS Cognito (JWT)
+   │               │                 │
+   ├── (Cache) ────┼── (Structured) ─┼── (Vector)
+   ▼               ▼                 ▼
+[ ElastiCache ]  [ Aurora Postgres ] [ OpenSearch Serverless ]
+(Redis Session)  (Customer/Sales)    (Wiki Embeddings)
+   │
+   └───────────────► [ Amazon Bedrock ]
+                     (Claude 3.5 Haiku / Sonnet Vision LLM)
 ```
 
 ### How to Read It (Step by Step)
@@ -265,10 +216,9 @@ Almost every system you'll encounter uses one or more of these patterns:
 
 ### Pattern 1: Client-Server (The Foundation)
 
-```mermaid
-flowchart LR
-    C["Client<br/>(Browser)"] -->|"HTTP Request"| S["Server<br/>(API)"]
-    S -->|"HTTP Response"| C
+```
+[Client (Browser)] ───HTTP Request───► [Server (API)]
+[Client (Browser)] ◄──HTTP Response── [Server (API)]
 ```
 
 - **Client:** Initiates requests (your React app, a mobile app, `curl` in terminal)
@@ -277,21 +227,22 @@ flowchart LR
 
 ### Pattern 2: Microservices (Separation of Concerns)
 
-```mermaid
-flowchart TB
-    C["Client"] --> G["API Gateway"]
-    G --> A["Auth Service"] --> UDB[("User DB")]
-    G --> O["Order Service"] --> ODB[("Order DB")]
-    G --> S["Search Service"] --> IDX[("Search Index")]
+```
+[Auth Service] ──► [User DB]
+[Order Service] ──► [Order DB]
+[Search Service] ──► [Search Index]
+      ▲                ▲
+      └───[API Gateway]───┘
+              ▲
+         [Client]
 ```
 
 Instead of one giant server doing everything (a "monolith"), each service owns one business domain. Our blueprint uses a **modular monolith** approach — one FastAPI service, but with clear internal separation between auth, search, and data pipelines.
 
 ### Pattern 3: Event-Driven (React to Changes)
 
-```mermaid
-flowchart LR
-    F["File Upload"] --> S3[("S3 Bucket")] -->|"triggers"| L["Lambda Function"] --> D[("Database")]
+```
+[File Upload] ──► [S3 Bucket] ──triggers──► [Lambda Function] ──► [Database]
 ```
 
 Something happens (a file is uploaded), and that event automatically triggers downstream work. Our blueprint uses this for the ETL pipeline: upload a spreadsheet → Lambda parses it → data lands in PostgreSQL.
@@ -360,7 +311,7 @@ Total time: ~1.2 seconds. This is the power of understanding architecture — yo
 - Know the three patterns: Client-Server, Microservices, Event-Driven.
 - **Your job as a junior is not to design the architecture — it's to understand it well enough to place your code in the right spot and debug effectively.**
 
-**Exercise:** [Exercise 1: Draw Your First Architecture Diagram](exercises/exercise-01-draw-architecture.md)
+👉 **Exercise:** [Exercise 1: Draw Your First Architecture Diagram](exercises/exercise-01-draw-architecture.md)
 
 ---
 
@@ -516,16 +467,15 @@ How we use it:     Text generation (Claude 3.5 Haiku), vision/image analysis (Cl
 
 ## 2.3 Managed vs. Unmanaged — The Trade-Off Spectrum
 
-**Axis:** More control ◄────────────────────────► Less control (left → right)
+```
+More Control ◄──────────────────────────────────────────► Less Control
+Less Managed                                                More Managed
 
-```mermaid
-flowchart LR
-    EC2["EC2<br/>(Your VM)<br/>You manage OS, patches, scaling"]
-    ECS["ECS<br/>(Your Containers)<br/>You manage Docker,<br/>AWS manages servers"]
-    LAMBDA["Lambda<br/>(Your Code)<br/>AWS manages everything"]
-    BED["Bedrock<br/>(API Call)<br/>You manage the prompt,<br/>AWS manages the model"]
-
-    EC2 --> ECS --> LAMBDA --> BED
+EC2 (Your VM)    ECS (Your Containers)   Lambda (Your Code)    Bedrock (API Call)
+    │                    │                      │                    │
+    ▼                    ▼                      ▼                    ▼
+You manage OS,     You manage Docker      You manage code      You manage prompt
+patches, scaling   AWS manages servers    AWS manages everything  AWS manages model
 ```
 
 **Rule of thumb for our project:** We lean toward managed/serverless wherever possible. Our team is 4 developers. We don't have time to manage servers, apply security patches, or tune PostgreSQL configs. Let AWS handle that.
@@ -602,7 +552,7 @@ You're expected to reach Phase 2 within your first month. Phase 3 (IaC) by month
 - Progression: Console → CLI → Infrastructure as Code.
 - **The cloud is not magic — it's just someone else's computer, with a very good API.**
 
-**Exercise:** [Exercise 2: Cloud Services Mapping](exercises/exercise-02-cloud-services-mapping.md)
+👉 **Exercise:** [Exercise 2: Cloud Services Mapping](exercises/exercise-02-cloud-services-mapping.md)
 
 ---
 
@@ -621,17 +571,16 @@ You're expected to reach Phase 2 within your first month. Phase 3 (IaC) by month
 
 Our blueprint sets a hard target: **< 1.5 seconds end-to-end** for 1,000 concurrent agents. A latency budget breaks that target into pieces and assigns a time limit to each piece:
 
-```mermaid
-pie showData title Latency Budget (% of 1,500 ms target)
-    "Network round-trip + Load Balancer" : 3.3
-    "JWT validation" : 0.7
-    "Cache lookup / SQL query" : 2.7
-    "Context retrieval (RAG)" : 10
-    "LLM time-to-first-token" : 60
-    "Headroom" : 23.3
 ```
-
-**Used:** ~1,050–1,250 ms of the 1,500 ms budget.
+Total Latency Target: < 1,500 ms
+├─ Network round-trip + Load Balancer: ~50 ms    (3.3% of budget)
+├─ JWT validation:                   ~10 ms     (0.7%)
+├─ Cache lookup / SQL query:         ~40 ms     (2.7%)
+├─ Context retrieval (RAG):          ~150 ms    (10%)
+└─ LLM time-to-first-token:          ~800-1000 ms (53-67%)
+─────────────────────────────────────────────────
+                           Total:  ~1,050-1,250 ms
+```
 
 ### How to Read a Latency Budget
 
@@ -723,22 +672,14 @@ Cache invalidation is the hard part. "There are only two hard things in Computer
 
 ### The Problem with Traditional Requests
 
-```mermaid
-sequenceDiagram
-    participant U as User / Browser
-    participant S as Server (FastAPI)
+```
+Traditional (Request → Wait → Full Response):
+[Send request] ────────────────────────────────── [Receive full response]
+                ⏳ User stares at spinner for 1.5s
 
-    Note over U,S: Traditional request–response
-    U->>S: Request
-    S-->>U: Full response (spinner for ~1.5 s)
-
-    Note over U,S: Streaming (SSE)
-    U->>S: Request
-    S-->>U: token 1 (seen within 300 ms)
-    S-->>U: token 2
-    S-->>U: token 3
-    S-->>U: ...
-    S-->>U: Done
+Streaming (Request → Stream tokens → Build response):
+[Send request] ── [token1] ── [token2] ── [token3] ── ... ── [Done]
+                 👁️ User sees text appearing within 300ms
 ```
 
 ### How SSE (Server-Sent Events) Works
@@ -803,37 +744,60 @@ This is the single most important performance decision in our architecture:
 ### The Wrong Way (What NOT to Do)
 
 ```
-Embed EVERYTHING (spreadsheets + wiki) into vectors
-Every user question → vector search → find similar content → feed to LLM
-"What's order #8821 status?" → vector search through 50,000 spreadsheet rows → LLM guesses → WRONG
+❌ Embed EVERYTHING (spreadsheets + wiki) into vectors
+❌ Every user question → vector search → find similar content → feed to LLM
+❌ "What's order #8821 status?" → vector search through 50,000 spreadsheet rows → LLM guesses → WRONG
 ```
 
 **Problem:** Vector search is ~150ms. SQL lookup is ~20ms. Using vectors for exact data is 7.5x slower AND less accurate.
 
 ### The Right Way (Our Approach)
 
-```mermaid
-flowchart TD
-    Q1["User: 'What's the status of order #8821?'"] --> C1{"LLM classifies"} -->|"STRUCTURED data query"| G1["Generate SQL:<br/>SELECT status FROM orders WHERE id = 8821"]
-    G1 --> AUR[("Aurora PostgreSQL<br/>executes query (~20 ms)")]
-    AUR --> F1["LLM formats result:<br/>'Order #8821 was shipped on July 28 and is in transit.'"]
+```
+User asks: "What's the status of order #8821?"
+    │
+    ▼
+LLM classifies: "This is a STRUCTURED data query"
+    │
+    ▼
+LLM generates SQL: SELECT status FROM orders WHERE id = 8821
+    │
+    ▼
+Aurora PostgreSQL executes query: ~20ms
+    │
+    ▼
+LLM formats result: "Order #8821 was shipped on July 28 and is in transit."
 
-    Q2["User: \"How do I fix a paper jam on an HP LaserJet?\""] --> C2{"LLM classifies"} -->|"UNSTRUCTURED knowledge query"| VS[("OpenSearch<br/>vector search (~150 ms)")]
-    VS --> R3["Returns top 3 wiki articles<br/>about printer troubleshooting"]
-    R3 --> F2["LLM synthesizes answer<br/>from retrieved articles"]
+───────────────────────────────────────────────────
+
+User asks: "How do I fix a paper jam on an HP LaserJet?"
+    │
+    ▼
+LLM classifies: "This is an UNSTRUCTURED knowledge query"
+    │
+    ▼
+Vector search in OpenSearch: ~150ms
+    │
+    ▼
+Returns top 3 wiki articles about printer troubleshooting
+    │
+    ▼
+LLM synthesizes answer from retrieved articles
 ```
 
 ### The Decision Tree
 
-```mermaid
-flowchart TD
-    Q["Incoming question"]
-    Q --> D1{"Contains order ID, date, account number, or dollar amount?"}
-    D1 -->|"YES"| SQL[("SQL Tool Call → Aurora PostgreSQL")]
-    Q --> D2{"Contains 'how to', 'what is', 'troubleshoot', or a product name?"}
-    D2 -->|"YES"| VS[("Vector Search → OpenSearch → RAG")]
-    Q --> D3{"Contains an image attachment?"}
-    D3 -->|"YES"| VM["Vision Model (Claude Sonnet)<br/>→ Multimodal Pipeline"]
+```
+Incoming question
+    │
+    ├── Contains order ID, date, account number, dollar amount?
+    │       └── YES → SQL Tool Call → Aurora PostgreSQL
+    │
+    ├── Contains "how to", "what is", "troubleshoot", product name?
+    │       └── YES → Vector Search → OpenSearch → RAG
+    │
+    └── Contains image attachment?
+            └── YES → Vision Model (Claude Sonnet) → Multimodal Pipeline
 ```
 
 ---
@@ -934,7 +898,7 @@ locust -f locustfile.py --host=https://api.staging.company.com --users 1000 --sp
 - **Structured data → SQL. Unstructured data → Vector search.** Never embed spreadsheet rows.
 - **Load test** before you launch. If you haven't tested 1,000 concurrent users, you don't know if your system works.
 
-**Exercise:** [Exercise 3: Measure and Optimize Latency](exercises/exercise-03-latency-budget.md)
+👉 **Exercise:** [Exercise 3: Measure and Optimize Latency](exercises/exercise-03-latency-budget.md)
 
 ---
 
@@ -1037,12 +1001,12 @@ The trade-off: You can't "revoke" a JWT before it expires. Once issued, it's val
 ### How to Decode a JWT (NEVER Trust the Payload Without Verifying!)
 
 ```python
-# INCORRECT — Never decode without verification!
+# ❌ WRONG — Never decode without verification!
 import base64, json
 payload = json.loads(base64.b64decode(token.split('.')[1] + '=='))
 # Attacker could modify the payload and you'd never know!
 
-# CORRECT — Always verify the signature
+# ✅ CORRECT — Always verify the signature
 import jwt
 from jwt.algorithms import RSAAlgorithm
 import requests
@@ -1068,13 +1032,12 @@ print(decoded["custom:department"])  # "Finance"
 
 ### The Three Concepts
 
-```mermaid
-flowchart TD
-    U["User"] -->|"has"| R["Role"] -->|"has"| P["Permissions"]
+```
+User ──has──► Role ──has──► Permissions
 
-    S["Agent Sarah"] --> F["Finance"] --> FP["process_refund<br/>verify_bank_transaction<br/>view_product_info"]
-    M["Agent Mike"] --> L["Logistics"] --> LP["track_shipment<br/>report_shipping_damage<br/>view_product_info"]
-    PR["Agent Priya"] --> G["General"] --> GP["view_product_info<br/>troubleshoot_hardware<br/>update_account"]
+Agent Sarah ──► Finance ──► [process_refund, verify_bank_transaction, view_product_info]
+Agent Mike  ──► Logistics ─► [track_shipment, report_shipping_damage, view_product_info]
+Agent Priya ──► General ───► [view_product_info, troubleshoot_hardware, update_account]
 ```
 
 - **User:** The actual person (agent Sarah)
@@ -1085,16 +1048,19 @@ flowchart TD
 
 ### Our Department Access Control Matrix
 
-```mermaid
-flowchart TD
-    AUTH["Agent Authenticated<br/>(Cognito JWT Scope)"]
-    AUTH --> G["Dept: General"]
-    AUTH --> F["Dept: Finance"]
-    AUTH --> L["Dept: Logistics"]
-
-    G --> GP["Account Details<br/>Product Wiki<br/>Tech Troubleshooting<br/>basic_info_tool"]
-    F --> FP["Account Details<br/>Product Wiki<br/>Tech Troubleshooting<br/>refund_process_tool"]
-    L --> LP["Account Details<br/>Product Wiki<br/>Tech Troubleshooting<br/>shipment_tracking_tool"]
+```
+                          ┌───────────────────────────┐
+                          │    Agent Authenticated    │
+                          │   (Cognito JWT Scope)     │
+                          └─────────────┬─────────────┘
+                                        │
+             ┌──────────────────────────┼──────────────────────────┐
+             ▼                          ▼                          ▼
+     [ Dept: General ]          [ Dept: Finance ]          [ Dept: Logistics ]
+   - Account Details          - Account Details          - Account Details
+   - Product Wiki             - Product Wiki             - Product Wiki
+   - Tech Troubleshooting     - Tech Troubleshooting     - Tech Troubleshooting
+   - basic_info_tool          - refund_process_tool      - shipment_tracking_tool
 ```
 
 Every agent can do the **common tasks** (view products, troubleshoot). Each department adds **specialized tools** that other departments cannot access.
@@ -1176,14 +1142,24 @@ RULES:
 
 ### How the Router Works at Runtime
 
-```mermaid
-flowchart TD
-    Q["Agent (General Dept) asks:<br/>'Issue a refund for order #5521'"]
-    Q --> CHK["AI checks allowed_tools =<br/>[view_product_info, troubleshoot_hardware, update_account]"]
-    CHK --> IN{"'process_refund' in allowed_tools?"}
-    IN -->|"No"| ROUTE["AI response:<br/>ROUTING REQUIRED: This query involves Finance. Please transfer this ticket to the Finance department."]
-    ROUTE --> BTN["Frontend: Shows a 'Transfer to Finance' button"]
-    BTN --> FIN["Finance agent receives ticket → has 'process_refund' permission → handles refund"]
+```
+Agent (General Dept) asks: "Issue a refund for order #5521"
+    │
+    ▼
+AI checks: allowed_tools = [view_product_info, troubleshoot_hardware, update_account]
+    │
+    ▼
+"process_refund" is NOT in allowed_tools
+    │
+    ▼
+AI response: "ROUTING REQUIRED: This query involves Finance. 
+              Please transfer this ticket to the Finance department."
+    │
+    ▼
+Frontend: Shows a "Transfer to Finance" button
+    │
+    ▼
+Finance agent receives ticket → has "process_refund" permission → handles refund
 ```
 
 This is **defense in depth**: the backend blocks unauthorized API calls, AND the AI prompt prevents the model from even attempting to help with out-of-scope requests.
@@ -1194,7 +1170,7 @@ This is **defense in depth**: the backend blocks unauthorized API calls, AND the
 
 ### The "Never Do This" List
 
-| Never | Always |
+| ❌ Never | ✅ Always |
 |---|---|
 | Store JWT in `localStorage` (vulnerable to XSS) | Store JWT in an `httpOnly` cookie or secure memory |
 | Hardcode secrets in source code | Use environment variables or AWS Secrets Manager |
@@ -1255,7 +1231,7 @@ Before you merge any code that touches auth, verify:
 - Defense in depth: Backend middleware blocks API calls. AI system prompt prevents hallucinated answers.
 - **Security is not a feature. It's a property of every feature.**
 
-**Exercise:** [Exercise 4: Build a JWT + RBAC System](exercises/exercise-04-jwt-rbac.md)
+👉 **Exercise:** [Exercise 4: Build a JWT + RBAC System](exercises/exercise-04-jwt-rbac.md)
 
 ---
 
@@ -1299,11 +1275,12 @@ It's the same underlying technology (transformer architecture) — but trained o
 
 You don't need to understand the math, but you should understand the pipeline:
 
-```mermaid
-flowchart LR
-    P["Customer Photo<br/>(JPEG)"] --> E["Image Encoding<br/>(Vision Encoder → Token IDs)"]
-    E --> L["LLM Processing<br/>(Transformer + Text Prompt)"]
-    L --> O["Text Output<br/>(Diagnosis + Steps)"]
+```
+┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐     ┌──────────────┐
+│  Customer   │     │  Image Encoding  │     │  LLM Processing │     │  Text Output │
+│  Photo      │ ──► │  (Vision Encoder)│ ──► │  (Transformer)  │ ──► │  Diagnosis   │
+│  (JPEG)     │     │  → Token IDs     │     │  + Text Prompt  │     │  + Steps     │
+└─────────────┘     └──────────────────┘     └─────────────────┘     └──────────────┘
 ```
 
 **Step 1 — Image Encoding:** The image is split into patches (like words in a sentence). Each patch is converted into a vector embedding (a list of numbers). These embeddings are fed into the transformer as "image tokens."
@@ -1315,16 +1292,16 @@ flowchart LR
 ### What This Means for You (The Developer)
 
 You don't need to:
-- Train a vision model
-- Run image preprocessing pipelines
-- Manage GPU memory for inference
-- Understand convolutional neural networks
+- ❌ Train a vision model
+- ❌ Run image preprocessing pipelines
+- ❌ Manage GPU memory for inference
+- ❌ Understand convolutional neural networks
 
 You DO need to:
-- Send images in the right format (base64 or S3 URL)
-- Compress images before sending (network bandwidth matters)
-- Write good text prompts that reference the image
-- Handle the structured diagnostic output
+- ✅ Send images in the right format (base64 or S3 URL)
+- ✅ Compress images before sending (network bandwidth matters)
+- ✅ Write good text prompts that reference the image
+- ✅ Handle the structured diagnostic output
 
 ---
 
@@ -1332,26 +1309,42 @@ You DO need to:
 
 ### The Full Flow
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant A as Support Agent
-    participant R as React Frontend
-    participant API as FastAPI Backend
-    participant B as Amazon Bedrock (Claude 3.5 Sonnet)
-
-    A->>R: Sends photo of broken laptop screen
-    R->>R: Client-side compression (max 1024px, < 500KB JPEG)
-    alt Direct send
-        R->>API: base64 image + text prompt
-    else Large / batch
-        R->>API: Upload to S3 presigned URL, then send URL
-    end
-    API->>B: Messages [image + text prompt]
-    B-->>API: Vision analysis (cracked LCD, physical impact damage)
-    API->>API: Parse structured output (identified_hardware, visual_evidence, action_plan)
-    API-->>R: Structured diagnosis
-    R-->>A: Diagnosis with expandable sections
+```
+Customer sends photo of broken laptop screen to support agent
+    │
+    ▼
+[Step 1] React frontend: Agent drags image into chat window
+    │
+    ├── Client-side compression: Resize to max 1024px, compress to <500KB JPEG
+    │
+    ▼
+[Step 2] React: Convert to base64 string (for direct send) 
+    │      OR upload to S3 presigned URL (for large/batch images)
+    │
+    ▼
+[Step 3] FastAPI: Receive image + text prompt
+    │      "Customer says: Screen is cracked and shows lines. What should I do?"
+    │
+    ▼
+[Step 4] FastAPI: Call Bedrock with Claude 3.5 Sonnet
+    │      Messages = [
+    │        {"role": "user", "content": [
+    │          {"type": "image", "source": {"bytes": base64_image}},
+    │          {"type": "text", "text": "Diagnose this laptop screen issue..."}
+    │        ]}
+    │      ]
+    │
+    ▼
+[Step 5] Claude Sonnet: Vision analysis
+    │      "I can see a cracked LCD panel with horizontal lines across the display.
+    │       The damage appears to be physical impact damage, not a GPU failure..."
+    │
+    ▼
+[Step 6] FastAPI: Parse structured output
+    │      identified_hardware, visual_evidence, action_plan
+    │
+    ▼
+[Step 7] React: Display diagnosis with expandable sections
 ```
 
 ### Step-by-Step Code
@@ -1516,17 +1509,17 @@ async def diagnose(
 
 ```
 base64 (inline):
-  + Simpler — one request, no upload step
-  + Good for images < 500KB
-  - ~33% size overhead
-  - Slower for large images (blocking request)
+  ✅ Simpler — one request, no upload step
+  ✅ Good for images < 500KB
+  ❌ ~33% size overhead
+  ❌ Slower for large images (blocking request)
 
 S3 Presigned URL:
-  + No size limit within reason
-  + Async upload (non-blocking)
-  + Better for batch processing
-  - Two-step: upload to S3, then send URL to API
-  - S3 costs (negligible but non-zero)
+  ✅ No size limit within reason
+  ✅ Async upload (non-blocking)
+  ✅ Better for batch processing
+  ❌ Two-step: upload to S3, then send URL to API
+  ❌ S3 costs (negligible but non-zero)
 ```
 
 **Our rule:** Use base64 for chat images (< 500KB). Use S3 presigned URLs for batch uploads, reports, and archival.
@@ -1631,7 +1624,7 @@ for the support agent to follow. Consider both hardware and software causes.
 - Use Haiku for quick triage ("damaged or not?"). Use Sonnet for detailed diagnosis.
 - **The model is a tool, not magic. Give it good images and good prompts, and it will give you good answers.**
 
-**Exercise:** [Exercise 5: Call a Vision Model API](exercises/exercise-05-vision-api.md)
+👉 **Exercise:** [Exercise 5: Call a Vision Model API](exercises/exercise-05-vision-api.md)
 
 ---
 
@@ -1659,15 +1652,12 @@ A roadmap is NOT a rigid schedule. It's a **shared understanding of priorities**
 
 ## 6.2 Our 6-Month Roadmap — Phase by Phase
 
-```mermaid
-timeline
-    title 6-Month Roadmap
-    Month 1 : Phase 1 · Setup Infra & Auth
-    Month 2 : Phase 2 · Ingest Data & APIs
-    Month 3 : Phase 3 · RAG & Vision Engine
-    Month 4 : Phase 4 · UI & Workflows
-    Month 5 : Phase 5 · Performance & Optimization
-    Month 6 : Phase 6 · Launch & Hardening
+```
+       Month 1          Month 2          Month 3          Month 4          Month 5          Month 6
+  ┌────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────┐
+  │ Phase 1: Setup │ Phase 2: Ingest│ Phase 3: RAG   │ Phase 4: UI    │ Phase 5: Perf  │ Phase 6: Launch│
+  │ Infra & Auth   │ Data & APIs    │ & Vision Engine│ & Workflows    │ & Optimization │ & Hardening    │
+  └────────────────┴────────────────┴────────────────┴────────────────┴────────────────┴────────────────┘
 ```
 
 ### Phase 1: Foundation & Auth Setup (Month 1)
@@ -1933,7 +1923,7 @@ Your work is done when:
 - "Done" has a checklist. Use it.
 - **The best junior engineers are not the ones who write the most code — they're the ones who reliably deliver complete, tested, documented features on time.**
 
-**Exercise:** [Exercise 6: Plan a Mini Roadmap](exercises/exercise-06-project-planning.md)
+👉 **Exercise:** [Exercise 6: Plan a Mini Roadmap](exercises/exercise-06-project-planning.md)
 
 ---
 
