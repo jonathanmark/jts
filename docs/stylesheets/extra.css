@@ -107,6 +107,98 @@
   --md-footer-fg-color--lighter: #7c7260;
 }
 
+/* ---- Paper scheme: soft neutral reading surface ------------------------- */
+/* A cooler, lower-contrast paper that is gentler on the eyes for long reads.
+   Same forest green / copper branding — only the reading surface changes. */
+
+[data-md-color-scheme="paper"] {
+  --md-primary-fg-color: #1f4e3d;
+  --md-primary-fg-color--light: #3d7a5f;
+  --md-primary-fg-color--dark: #14382b;
+  --md-accent-fg-color: #c46a4a;
+  --md-accent-fg-color--transparent: #c46a4a1a;
+
+  --md-default-bg-color: #f1efe9;            /* soft neutral paper */
+  --md-default-bg-color--light: #eae8e1;
+  --md-default-bg-color--lighter: #e4e1d9;
+  --md-default-bg-color--lightest: #ddd9cf;
+
+  --md-default-fg-color: #3a3630;            /* softer, lower-contrast text */
+  --md-default-fg-color--light: #575249;
+  --md-default-fg-color--lighter: #746e62;
+  --md-default-fg-color--lightest: #948d7e;
+
+  --md-typeset-color: #3a3630;
+  --md-typeset-a-color: #1f5c46;
+  --md-typeset-table-color: #cec8b6;
+  --md-typeset-table-color--light: #e2ded3;
+
+  --md-code-bg-color: #e9e6dc;
+  --md-code-fg-color: #3b362e;
+
+  --md-code-hl-keyword-color: #1f5c46;
+  --md-code-hl-string-color: #a3522f;
+  --md-code-hl-number-color: #8a6d1f;
+  --md-code-hl-comment-color: #817a6b;
+
+  --md-admonition-bg-color: #faf8f2;
+
+  --md-footer-bg-color: #14382b;
+  --md-footer-bg-color--dark: #0e241b;
+  --md-footer-fg-color: #e9e2d3;
+  --md-footer-fg-color--light: #b8ad94;
+  --md-footer-fg-color--lighter: #8f8369;
+
+  --md-diagram-bg: #fbfaf5;
+  --md-diagram-border: #d6d0bc;
+}
+
+/* ---- Grey scheme: neutral dark reading surface -------------------------- */
+/* A neutral (non-warm) charcoal with soft off-white text — the classic
+   low-glare dark reading mode. Same green/copper branding. */
+
+[data-md-color-scheme="grey"] {
+  --md-primary-fg-color: #2f6d55;
+  --md-primary-fg-color--light: #4a8a70;
+  --md-primary-fg-color--dark: #1d4a39;
+  --md-accent-fg-color: #dd8866;
+  --md-accent-fg-color--transparent: #dd88661a;
+
+  --md-default-bg-color: #1e1e1c;            /* neutral charcoal grey */
+  --md-default-bg-color--light: #252523;
+  --md-default-bg-color--lighter: #2b2b29;
+  --md-default-bg-color--lightest: #323230;
+
+  --md-default-fg-color: #d7d7d1;            /* soft off-white */
+  --md-default-fg-color--light: #b6b6af;
+  --md-default-fg-color--lighter: #989892;
+  --md-default-fg-color--lightest: #7d7d76;
+
+  --md-typeset-color: #d7d7d1;
+  --md-typeset-a-color: #8fc0a4;
+  --md-typeset-table-color: #3a3a36;
+  --md-typeset-table-color--light: #2b2b28;
+
+  --md-code-bg-color: #272725;
+  --md-code-fg-color: #dcdcd5;
+
+  --md-code-hl-keyword-color: #8fc0a4;
+  --md-code-hl-string-color: #e59a7a;
+  --md-code-hl-number-color: #d8b95e;
+  --md-code-hl-comment-color: #8f8f87;
+
+  --md-admonition-bg-color: #242422;
+
+  --md-footer-bg-color: #0f0f0d;
+  --md-footer-bg-color--dark: #0a0a08;
+  --md-footer-fg-color: #d4d4cd;
+  --md-footer-fg-color--light: #a5a59d;
+  --md-footer-fg-color--lighter: #7d7d75;
+
+  --md-diagram-bg: #262624;
+  --md-diagram-border: #44443e;
+}
+
 /* ---- Industrial details -------------------------------------------------- */
 
 /* Hairline double rule beneath H1, like a newspaper masthead. */

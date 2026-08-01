@@ -16,14 +16,25 @@ theme:
   logo: assets/favicon.svg
   favicon: assets/favicon.svg
   palette:
+    # Four reading surfaces, cycled via the header toggle. Branding
+    # (forest green + copper) stays constant; only the reading surface
+    # changes. Variables live in stylesheets/extra.css.
     - scheme: default
       toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
+        icon: material/weather-sunny
+        name: Switch to Paper
+    - scheme: paper
+      toggle:
+        icon: material/weather-partly-cloudy
+        name: Switch to Slate
     - scheme: slate
       toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
+        icon: material/weather-night
+        name: Switch to Grey
+    - scheme: grey
+      toggle:
+        icon: material/weather-cloudy
+        name: Switch to Ivory
   # Serif-based typography. Custom colors and the display serif for headings
   # (Fraunces) live in stylesheets/extra.css — see the "Old School
   # Industrialist" palette there.
