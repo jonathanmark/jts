@@ -376,6 +376,21 @@ body.md-hide-toc .md-sidebar--secondary ~ .md-content > .md-content__inner {
   box-shadow: inset 1px 0 0 var(--md-diagram-border);
 }
 
+/* Sidebar headers (nav + TOC titles): on desktop they render as a band with
+   the page background and a soft glow that clashes with the panel. Drop the
+   background so they sit flush on the guide panel, align them with the links
+   beneath, and separate them with a hairline. (Scoped to desktop so the
+   mobile drawer keeps its branded header.) */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar .md-nav__title {
+    background: transparent;
+    box-shadow: none;
+    padding-left: 1rem;
+    border-bottom: 1px solid var(--md-diagram-border);
+    margin-bottom: 0.4rem;
+  }
+}
+
 /* ---- Hide scrollbars; show a "reached the end" bump --------------------- */
 
 html {

@@ -1,13 +1,10 @@
 # MkDocs configuration for the Junior Engineer Onboarding Guide
 # Docs: https://squidfunk.github.io/mkdocs-material/
-#
-# Personal site: the repo must be named <username>.github.io,
-# e.g. https://github.com/jonathanmark/jonathanmark.github.io
 
 site_name: Junior Engineer Onboarding Guide
 site_description: Self-paced onboarding curriculum for junior software engineers — from CS theory to production systems.
-site_url: https://jonathanmark.github.io/
-repo_url: https://github.com/jonathanmark/jonathanmark.github.io
+site_url: https://jonathanmark.github.io/jts/
+repo_url: https://github.com/jonathanmark/jts
 
 # Content lives in the standard docs/ directory (default docs_dir).
 theme:
