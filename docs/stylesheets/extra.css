@@ -355,13 +355,7 @@ body.md-hide-toc .md-sidebar--secondary ~ .md-content > .md-content__inner {
 /* ---- Sidebars ------------------------------------------------------------ */
 
 /* The sidebars sit on the page background so the reading surface stays the
-   only visual focus. A hairline separates each panel from the content column. */
-.md-sidebar--primary .md-sidebar__scrollwrap {
-  box-shadow: inset -1px 0 0 var(--md-diagram-border);
-}
-.md-sidebar--secondary .md-sidebar__scrollwrap {
-  box-shadow: inset 1px 0 0 var(--md-diagram-border);
-}
+   only visual focus — no borders between them and the content column. */
 
 /* Anchored sidebar headers (nav + TOC): pinned to the top of their panel and
    painted with the page background, so list items scroll underneath out of
